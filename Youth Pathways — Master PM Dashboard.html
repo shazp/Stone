@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Pathways — Master PM Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --violet:#5B4BE0; --violet-d:#3A2CB0; --violet-t:#EEEBFC;
+    --lime:#C6F24E; --lime-d:#8FB61E;
+    --coral:#FF6B57; --teal:#0E9384; --amber:#F5A524;
+    --ink:#181826; --sub:#5A5A6E; --line:#E6E4F3; --bg:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif; color:var(--ink); background:var(--bg);
+    background-image:radial-gradient(ellipse 900px 620px at 92% -6%, rgba(91,75,224,.13), rgba(91,75,224,.04) 45%, transparent 70%);
+    background-repeat:no-repeat;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1240px; margin:0 auto; padding:36px 28px 60px;}
+
+  /* ---------- shared bits ---------- */
+  .eyebrow{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--violet); font-weight:700;
+  }
+  .chipnum{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:8px;
+    background:var(--violet); color:#fff;
+    font-family:'Space Mono',monospace; font-size:12px; font-weight:700;
+    margin-right:10px; flex:0 0 auto;
+  }
+  .sec-head{display:flex; align-items:center; gap:2px; margin:46px 0 6px;}
+  .sec-head h2{font-family:'Sora',sans-serif; font-size:21px; font-weight:700; letter-spacing:-.01em;}
+  .sec-sub{color:var(--sub); font-size:13.5px; margin:2px 0 18px 36px;}
+
+  /* ---------- header ---------- */
+  header{display:flex; flex-wrap:wrap; align-items:flex-start; gap:18px; margin-bottom:10px;}
+  .logo{
+    width:46px; height:46px; border-radius:13px; background:var(--violet);
+    position:relative; flex:0 0 auto;
+    box-shadow:0 6px 18px rgba(91,75,224,.28);
+  }
+  .logo::after{
+    content:""; position:absolute; right:-5px; bottom:-5px;
+    width:16px; height:16px; border-radius:6px; background:var(--lime);
+    border:2.5px solid var(--bg);
+  }
+  .logo::before{
+    content:""; position:absolute; left:12px; top:12px;
+    width:22px; height:22px; border-radius:50%;
+    border:3px solid rgba(255,255,255,.9); border-right-color:transparent;
+    transform:rotate(-45deg);
+  }
+  .head-text{flex:1 1 340px; min-width:260px;}
+  .head-text h1{font-family:'Sora',sans-serif; font-size:27px; font-weight:800; letter-spacing:-.02em; line-height:1.2;}
+  .head-text .sub{color:var(--sub); font-size:14px; margin-top:3px;}
+  .head-meta{display:flex; flex-direction:column; align-items:flex-end; gap:8px; margin-left:auto;}
+  .pill-phase{
+    display:inline-block; padding:6px 14px; border-radius:999px;
+    background:var(--violet-t); color:var(--violet-d); border:1px solid var(--line);
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .updated{font-family:'Space Mono',monospace; font-size:11.5px; color:var(--sub);}
+  .private-note{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11.5px; color:var(--sub);
+  }
+  .private-note .lockdot{
+    width:8px; height:8px; border-radius:2.5px; background:var(--lime-d); display:inline-block; flex:0 0 auto;
+  }
+
+  /* ---------- today's focus ---------- */
+  .focus-panel{
+    margin-top:26px; border-radius:16px; padding:26px 26px 22px;
+    background:linear-gradient(135deg, #FBFAFF 0%, var(--violet-t) 100%);
+    border:1.5px solid #DCD7F7;
+    box-shadow:0 10px 34px rgba(91,75,224,.10);
+  }
+  .focus-top{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;}
+  .focus-top h2{font-family:'Sora',sans-serif; font-size:22px; font-weight:800; letter-spacing:-.015em;}
+  .focus-count{
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--violet-d);
+    background:#fff; border:1px solid var(--line); border-radius:999px; padding:3px 10px;
+  }
+  .focus-calm{color:var(--sub); font-size:13.5px; margin:6px 0 18px; max-width:640px;}
+  .focus-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;}
+  .focus-card{
+    background:#fff; border:1px solid var(--line); border-radius:13px; padding:15px 16px 13px;
+    display:flex; flex-direction:column; gap:7px;
+    box-shadow:0 2px 8px rgba(24,24,38,.04);
+  }
+  .focus-card .fc-title{font-family:'Sora',sans-serif; font-size:14px; font-weight:700; line-height:1.35;}
+  .fc-flag{color:var(--coral); font-weight:700; margin-right:4px;}
+  .fc-meta{font-size:12px; color:var(--sub); display:flex; flex-direction:column; gap:3px;}
+  .fc-due-over{color:var(--coral); font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.04em;}
+  .fc-due-soon{color:var(--amber); font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.04em;}
+  .fc-due-none{color:var(--sub); font-family:'Space Mono',monospace; font-size:11px;}
+  .cat-chip{
+    display:inline-block; font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+    letter-spacing:.05em; padding:2px 8px; border-radius:6px; align-self:flex-start;
+  }
+
+  /* ---------- outcomes ---------- */
+  .outcomes-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;}
+  .outcome-card{
+    border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; background:#fff;
+  }
+  .oc-label{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700; line-height:1.35; min-height:2.6em;}
+  .oc-nums{display:flex; align-items:baseline; gap:6px; margin:8px 0 8px;}
+  .oc-actual{font-family:'Sora',sans-serif; font-size:26px; font-weight:800; color:var(--violet);}
+  .oc-target{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--sub);}
+  .oc-bar{height:8px; border-radius:999px; background:#EFEEF6; overflow:hidden;}
+  .oc-fill{height:100%; border-radius:999px; background:var(--violet); min-width:0;}
+  .oc-note{font-size:12px; color:var(--sub); margin-top:8px;}
+  .verify-chip{
+    display:inline-flex; align-items:center; gap:5px; margin-top:9px;
+    font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.03em;
+    color:#8a6210; background:#FDF3DC; border:1px solid #F3DFAE; border-radius:6px; padding:3px 8px;
+  }
+  .budget-flag{
+    margin-top:16px; border-radius:13px; padding:15px 18px;
+    background:#FFF6EA; border:1.5px solid #F5D9A8;
+    font-size:13.5px; color:#6b4d12; display:flex; gap:12px; align-items:flex-start;
+  }
+  .budget-flag .warn{
+    flex:0 0 auto; color:var(--amber); font-size:17px; line-height:1.3; font-weight:700;
+  }
+
+  /* ---------- filter ---------- */
+  .filter-bar{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px;}
+  .filter-btn{
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.04em;
+    border:1.5px solid var(--line); background:#fff; color:var(--sub);
+    border-radius:999px; padding:6px 13px; cursor:pointer; transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--violet); color:var(--violet);}
+  .filter-btn.active{background:var(--violet); border-color:var(--violet); color:#fff;}
+
+  /* ---------- kanban ---------- */
+  .kanban{
+    display:grid; grid-template-columns:repeat(5, minmax(215px, 1fr)); gap:14px;
+    overflow-x:auto; padding-bottom:8px;
+  }
+  .kcol{
+    background:#FAFAFE; border:1px solid var(--line); border-radius:14px;
+    padding:14px 12px; min-height:120px;
+  }
+  .kcol-head{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin-bottom:12px; padding:0 4px;
+  }
+  .kcol-head .klabel{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700;}
+  .kcount{
+    font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700;
+    background:var(--violet-t); color:var(--violet-d); border-radius:999px;
+    padding:2px 9px; min-width:26px; text-align:center;
+  }
+  .kcol.is-done .kcount{background:#E7F5E4; color:#3F7D33;}
+  .task-card{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:13px 13px 11px; margin-bottom:10px;
+    display:flex; flex-direction:column; gap:7px;
+    box-shadow:0 1px 4px rgba(24,24,38,.04);
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .task-card:hover{box-shadow:0 5px 16px rgba(24,24,38,.09); transform:translateY(-1px);}
+  .tc-toprow{display:flex; align-items:center; gap:7px;}
+  .prio-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
+  .tc-flag{color:var(--coral); font-weight:700; font-size:13px; line-height:1;}
+  .tc-title{font-size:13px; font-weight:700; line-height:1.4; font-family:'Manrope',sans-serif;}
+  .tc-meta{font-size:11.5px; color:var(--sub);}
+  .tc-note{font-size:11.5px; color:var(--sub); font-style:italic; border-top:1px dashed var(--line); padding-top:6px;}
+  .tc-due-over{font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; color:var(--coral);}
+  .tc-due-soon{font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; color:var(--amber);}
+  .tc-due{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--sub);}
+  .req-chip{
+    display:inline-flex; align-items:center; gap:4px; align-self:flex-start;
+    font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.04em;
+    border-radius:6px; padding:2px 7px;
+  }
+  .req-ryan{background:#FFEDEA; color:#C4331F; border:1px solid #FFD2CB;}
+  .req-high{background:var(--violet-t); color:var(--violet-d); border:1px solid #DCD7F7;}
+  .kcol.is-done .task-card{opacity:.62;}
+  .kcol.is-done .tc-title{text-decoration:line-through; text-decoration-color:var(--sub); text-decoration-thickness:1px;}
+  .kempty{
+    font-size:12px; color:var(--sub); text-align:center; padding:18px 6px;
+    border:1.5px dashed var(--line); border-radius:10px; background:#fff;
+  }
+
+  /* ---------- by category ---------- */
+  .cat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;}
+  .cat-card{
+    border:1px solid var(--line); border-radius:13px; padding:15px 16px; background:#fff;
+    display:flex; flex-direction:column; gap:6px; border-top-width:3.5px;
+  }
+  .cat-card .cc-label{font-family:'Sora',sans-serif; font-size:13px; font-weight:700; line-height:1.35;}
+  .cat-card .cc-count{font-family:'Sora',sans-serif; font-size:24px; font-weight:800;}
+  .cat-card .cc-count small{font-family:'Manrope',sans-serif; font-size:12px; font-weight:600; color:var(--sub);}
+  .cat-card .cc-weight{font-size:11.5px; color:var(--sub); font-family:'Space Mono',monospace;}
+
+  /* ---------- quick links ---------- */
+  .links-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:12px;}
+  a.link-card{
+    display:flex; align-items:center; gap:13px; text-decoration:none; color:var(--ink);
+    border:1px solid var(--line); border-radius:13px; padding:14px 16px; background:#fff;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  a.link-card:hover{border-color:var(--violet); box-shadow:0 5px 16px rgba(91,75,224,.12);}
+  .lk-icon{
+    width:36px; height:36px; border-radius:10px; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; color:#fff;
+  }
+  .lk-text{min-width:0;}
+  .lk-label{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700;}
+  .lk-file{font-size:11px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .icloud-note{
+    margin-top:12px; font-size:12px; color:var(--sub);
+    display:flex; align-items:center; gap:8px;
+  }
+  .icloud-note .cloud{
+    display:inline-block; width:9px; height:9px; border-radius:50%;
+    background:var(--amber); flex:0 0 auto;
+  }
+
+  /* ---------- how this works ---------- */
+  .how-card{
+    border:1.5px solid #DCD7F7; border-radius:16px; padding:24px 26px;
+    background:linear-gradient(135deg, #FDFDFB 0%, #F5FBE6 100%);
+  }
+  .how-card h3{font-family:'Sora',sans-serif; font-size:16px; font-weight:700; margin-bottom:10px;}
+  .how-card ul{list-style:none; margin:10px 0 14px;}
+  .how-card li{
+    font-size:13.5px; color:var(--sub); padding:4px 0 4px 20px; position:relative;
+  }
+  .how-card li::before{
+    content:""; position:absolute; left:2px; top:12px;
+    width:8px; height:8px; border-radius:2.5px; background:var(--lime-d);
+  }
+  .how-reassure{
+    font-family:'Sora',sans-serif; font-size:14px; font-weight:600; color:var(--violet-d);
+    border-left:3px solid var(--lime); padding-left:12px; margin-top:6px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:46px; padding-top:22px; border-top:1px solid var(--line);
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--sub);
+    text-align:center; letter-spacing:.03em;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1080px){ .kanban{grid-template-columns:repeat(5, 235px);} }
+  @media (max-width:720px){
+    .wrap{padding:24px 16px 44px;}
+    .head-meta{align-items:flex-start; margin-left:0;}
+    .head-text h1{font-size:22px;}
+    .focus-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:480px){ .focus-grid{grid-template-columns:1fr;} }
+
+  /* ---------- print ---------- */
+  @media print{
+    body{background:none;}
+    .wrap{max-width:none; padding:0;}
+    .filter-bar{display:none;}
+    .kanban{grid-template-columns:repeat(5, 1fr); overflow:visible;}
+    .task-card, .focus-card, .outcome-card, .cat-card, .kcol, a.link-card, .how-card, .focus-panel{
+      box-shadow:none; break-inside:avoid;
+    }
+    .sec-head{break-after:avoid;}
+    a.link-card{border-color:#ccc;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ A. HEADER ============ -->
+  <header>
+    <div class="logo" aria-hidden="true"></div>
+    <div class="head-text">
+      <h1>Youth Pathways — Master PM</h1>
+      <div class="sub">Sharon's project brain &middot; private</div>
+    </div>
+    <div class="head-meta">
+      <span class="pill-phase" id="phase-pill"></span>
+      <span class="updated" id="updated-line"></span>
+      <span class="private-note"><span class="lockdot"></span>Private working file — not shared with anyone.</span>
+    </div>
+  </header>
+
+  <!-- ============ B. TODAY'S FOCUS ============ -->
+  <section class="focus-panel" id="focus-panel">
+    <div class="focus-top">
+      <span class="eyebrow">Start here</span>
+    </div>
+    <div class="focus-top" style="margin-top:4px;">
+      <h2>Today's Focus</h2>
+      <span class="focus-count" id="focus-count"></span>
+    </div>
+    <p class="focus-calm">Just these. Everything else is captured below — you don't have to hold it in your head.</p>
+    <div class="focus-grid" id="focus-grid"></div>
+  </section>
+
+  <!-- ============ C. OUTCOMES ============ -->
+  <div class="sec-head"><span class="chipnum">01</span><h2>Outcomes vs Targets</h2></div>
+  <p class="sec-sub">Where the program needs to land. Nothing has started yet — zeros are expected and fine.</p>
+  <div class="outcomes-grid" id="outcomes-grid"></div>
+  <div class="budget-flag"><span class="warn">&#9888;</span><span id="budget-note"></span></div>
+
+  <!-- ============ D. KANBAN ============ -->
+  <div class="sec-head"><span class="chipnum">02</span><h2>The Board</h2></div>
+  <p class="sec-sub">Every task, in one trusted place. Filter by category if you want to look at just one slice.</p>
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="kanban" id="kanban"></div>
+
+  <!-- ============ E. BY CATEGORY ============ -->
+  <div class="sec-head"><span class="chipnum">03</span><h2>Where the Weight Is</h2></div>
+  <p class="sec-sub">Open tasks by category — a quick read on which areas are heaviest right now.</p>
+  <div class="cat-grid" id="cat-grid"></div>
+
+  <!-- ============ F. QUICK LINKS ============ -->
+  <div class="sec-head"><span class="chipnum">04</span><h2>Quick Links</h2></div>
+  <p class="sec-sub">The project's key documents, all in this folder.</p>
+  <div class="links-grid" id="links-grid"></div>
+  <p class="icloud-note"><span class="cloud"></span>The Budget/Proposal spreadsheet and the Project Narrative PDF may still be downloading from iCloud — if a link doesn't open, give it a moment and try again.</p>
+
+  <!-- ============ G. HOW THIS WORKS ============ -->
+  <div class="sec-head"><span class="chipnum">05</span><h2>How This Works</h2></div>
+  <div class="how-card">
+    <h3>You never have to manage this page by hand.</h3>
+    <ul>
+      <li>Just talk to Claude in Cowork — "add a task", "mark #12 done", "move the space task to In Progress", "set a due date" — and Claude edits this file for you.</li>
+      <li>A morning briefing arrives each weekday at 8:00 AM with your focus for the day.</li>
+      <li>A Friday progress report goes to Laurie &amp; Dr. Ryan, drafted for you.</li>
+    </ul>
+    <p class="how-reassure">Nothing lives only in your head. If it's not here, tell me and it goes on the board.</p>
+  </div>
+
+  <!-- ============ H. FOOTER ============ -->
+  <footer id="footer"></footer>
+</div>
+
+<script>
+/* =====================================================================
+   SINGLE SOURCE OF TRUTH — edit ONLY this DATA object to update the board.
+   The whole page re-renders from it every time the file is opened.
+
+   SCHEMA
+   ------
+   updated:    string shown in the header & footer, e.g. "July 6, 2026"
+   phase:      string shown in the phase pill
+   categories: [{id, label, color}]  — id is referenced by task.cat
+   statuses:   [{id, label}]         — kanban columns, in order; id is referenced by task.status
+   outcomes:   [{label, actual, target, unit, note, verify}]
+               unit: "" for counts, "%" for percentages
+               verify: true shows a "Reconcile with finalized proposal" chip
+   budgetNote: string shown in the amber budget-reconciliation banner
+   tasks:      [{
+     id:          number (unique)
+     title:       string
+     cat:         category id (see categories above)
+     status:      "backlog" | "next" | "inprogress" | "waiting" | "done"
+     priority:    "urgent" | "high" | "medium" | "low"
+     owner:       who owns it
+     waitingOn:   who it's blocked on ("" if nobody)
+     requestedBy: "Dr. Ryan" shows a coral pennant chip;
+                  "Laurie" / "Stone Foundation" / "Executive Leadership"
+                  show a violet high-priority chip; "" for none
+     due:         "YYYY-MM-DD" or null
+     note:        short optional note ("" if none)
+   }]
+   ===================================================================== */
+const DATA = {
+ updated: "July 6, 2026",
+ phase: "Pre-Launch / Planning",
+ categories: [
+  {id:"planning", label:"Project Planning & Launch", color:"#5B4BE0"},
+  {id:"staff", label:"Staff Recruitment & Hiring", color:"#0E9384"},
+  {id:"training", label:"Team Training & Onboarding", color:"#8FB61E"},
+  {id:"program", label:"Program Design & Curriculum", color:"#FF6B57"},
+  {id:"recruit", label:"Participant Recruitment & Enrollment", color:"#F5A524"},
+  {id:"employer", label:"Employer Partnerships & Jobs", color:"#3A2CB0"},
+  {id:"ops", label:"Operations & Office Space", color:"#0EA5A5"},
+  {id:"data", label:"Data, Outcomes & Evaluation", color:"#7C4DFF"},
+  {id:"budget", label:"Budget, Compliance & Reporting", color:"#B5623C"},
+  {id:"other", label:"Cross-Project & Other Priorities", color:"#6B6B7B"}
+ ],
+ statuses: [
+  {id:"backlog", label:"Backlog"},
+  {id:"next", label:"Up Next"},
+  {id:"inprogress", label:"In Progress"},
+  {id:"waiting", label:"Waiting on Others"},
+  {id:"done", label:"Done"}
+ ],
+ outcomes: [
+  {label:"Youth enrolled (entry)", actual:0, target:140, unit:"", note:"70 in Yr1 + 70 in Yr2", verify:false},
+  {label:"Into workforce tracks (Codetalk/Fortifi)", actual:0, target:80, unit:"", note:"40 per year", verify:false},
+  {label:"Graduates (Codetalk/Fortifi)", actual:0, target:64, unit:"", note:"80% of enrolled", verify:false},
+  {label:"Living-wage / career placement", actual:0, target:50, unit:"", note:"~80% of grads; also tracked as 75% within 12 mo", verify:false},
+  {label:"Justice-involved avoid reoffending (12 mo)", actual:0, target:90, unit:"%", note:"90% target", verify:false},
+  {label:"Progress toward economic mobility", actual:0, target:126, unit:"", note:"90% of all youth", verify:false}
+ ],
+ budgetNote: "Budget confirmed from the finalized proposal (Jul 2026): Stone request $1,818,858 over 2 years — Yr1 $911,531 · Yr2 $907,327 · about $8,268 per client. Team: 8.0 FTE (5 new hires + 3 allocated) + 2 consultants.",
+ tasks: [
+  {id:1, title:"Own & build the Youth Pathways South LA project plan", cat:"planning", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"Laurie supporting."},
+  {id:2, title:"Review final Stone proposal before submission to Sarah", cat:"planning", status:"waiting", priority:"urgent", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"Dr. Ryan reviewing before it goes to Sarah (Stone)."},
+  {id:3, title:"Be fluent in the per-student / per-cohort cost story for the board", cat:"budget", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Executive Leadership", due:null, note:"Budget confirmed: Stone request $1,818,858 / 2 yrs (~$8,268 per client). Board flagged cost — be ready to explain the economics."},
+  {id:4, title:"Plan recruitment for a January 2027 cohort start", cat:"recruit", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"If Stone approves soon, recruitment could begin this fall."},
+  {id:5, title:"Talk to Ginneh about South LA space (interim + full building)", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Earliest space ~September 1."},
+  {id:6, title:"Acquire full South LA building — approach building owner", cat:"ops", status:"waiting", priority:"urgent", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"First to Serve needs ~60 days notice."},
+  {id:7, title:"Attend South LA Child Fair — bring cards, map employer landscape", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Confirm date."},
+  {id:8, title:"Pick Eddie Anderson's brain on South LA youth workforce resources", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Referrals & recruitment networks for 18–30 foster/TAY."},
+  {id:9, title:"Determine case manager backfill if Morgan is promoted to PM", cat:"staff", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:10, title:"Clarify Natalie's bandwidth across Santa Monica & South LA", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Does the Stone-funded PM straddle both sites?"},
+  {id:11, title:"Hire an Employment Liaison (senior external relationship-builder)", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"No internal candidate identified yet."},
+  {id:12, title:"Design Salesforce tracking for all Stone outcomes (with Elise)", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Elise", requestedBy:"", due:null, note:"Enrollment, placement, retention, SUD referrals — before launch."},
+  {id:13, title:"Rethink participant recruitment sourcing & readiness criteria", cat:"recruit", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Applications dropped ~80 → ~22 for 12 seats; full rethink needed."},
+  {id:14, title:"Reposition Code Talk as 'project management & technology skills'", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Not 'pathway to tech' — update materials."},
+  {id:15, title:"Coordinate partnership talks with Compton College & LA Trade Tech", cat:"employer", status:"backlog", priority:"high", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"Dr. Ryan connecting with college presidents."},
+  {id:16, title:"Elise: build Salesforce structure & train program staff pre-launch", cat:"data", status:"waiting", priority:"high", owner:"Elise", waitingOn:"Elise", requestedBy:"", due:null, note:""},
+  {id:17, title:"Morgan: interviewing for Program Manager role", cat:"staff", status:"waiting", priority:"high", owner:"Morgan", waitingOn:"Morgan", requestedBy:"", due:null, note:"Ongoing."},
+  {id:18, title:"Strategic-plan workforce goals review with Laurie", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:""},
+  {id:19, title:"Frame South LA expansion carefully with Santa Monica leadership", cat:"planning", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"Positioned as a success built on the SM model."},
+  {id:20, title:"Explore UCLA Extension community health worker training", cat:"program", status:"backlog", priority:"low", owner:"Joy", waitingOn:"Joy", requestedBy:"", due:null, note:"Possible new health pathway; Joy researching."},
+  {id:21, title:"Confirm governance, decision-maker & progress/risk tracking", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Kickoff decision."},
+  {id:22, title:"Finalize job descriptions for the new roles", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:23, title:"Update intake/application process for standardized data", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Include justice-involved fields."},
+  {id:24, title:"Set up participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:25, title:"Secure & prepare program space + computer lab (20 laptops)", cat:"ops", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:26, title:"Develop community outreach & recruitment plan", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:27, title:"Confirm/develop curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:28, title:"Decide data platform: keep SM YRT in Clarity; Youth Pathways → Salesforce", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"One system or two?"},
+  {id:29, title:"Define performance targets for 90 days / 6 months / Year 1", cat:"data", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:30, title:"Establish cross-team meeting cadence (YRT + Workforce)", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:31, title:"Set up program in accounting system + consultant agreements", cat:"budget", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"MH Clinician; Gang Prevention consultants."},
+  {id:32, title:"Speak to Steve Morse re: Redefine Alliance", cat:"other", status:"waiting", priority:"medium", owner:"Sharon", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"SEPARATE PROJECT — Redefine Alliance, not Youth Pathways. Application now submitted; confirm if this call is still needed."},
+  {id:33, title:"Redefine Alliance $50K incubator application — submitted", cat:"other", status:"done", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Submitted ✓ (Jul 6, 2026). SEPARATE PROJECT — Redefine Alliance, not part of Youth Pathways."},
+  {id:34, title:"Align with Laurie on reducing culinary cohorts 5 → 4, then tell team", cat:"other", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"Part of 10% cost reduction; frame as quality investment."}
+ ]
+};
+
+/* =====================================================================
+   RENDERING — no need to touch anything below this line.
+   ===================================================================== */
+(function(){
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const catById = {};
+  DATA.categories.forEach(c => catById[c.id] = c);
+
+  const PRIO_COLORS = {urgent:"var(--coral)", high:"var(--violet)", medium:"var(--amber)", low:"#B4B4C2"};
+  const HIGH_REQ = ["Laurie","Stone Foundation","Executive Leadership"];
+
+  /* ---- date helpers (local midnight, so "today" is calendar-correct) ---- */
+  function today(){ const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function parseDue(s){
+    if(!s) return null;
+    const p = s.split("-").map(Number);
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+  function daysUntil(dueStr){
+    const d = parseDue(dueStr);
+    if(!d) return null;
+    return Math.round((d - today()) / 86400000);
+  }
+  function fmtDue(dueStr){
+    const d = parseDue(dueStr);
+    if(!d) return "";
+    return d.toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"});
+  }
+
+  /* ---- tiny DOM builder ---- */
+  function el(tag, cls, text){
+    const n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(text != null) n.textContent = text;
+    return n;
+  }
+
+  function dueBadge(task, prefixDate){
+    if(!task.due) return null;
+    const n = daysUntil(task.due);
+    const dateTxt = fmtDue(task.due);
+    if(n < 0){
+      return el("span","tc-due-over", "OVERDUE — was due " + dateTxt);
+    } else if(n <= 7){
+      const when = n === 0 ? "Due today" : "Due in " + n + (n === 1 ? " day" : " days");
+      const b = el("span","tc-due-soon", when + " — " + dateTxt);
+      return b;
+    }
+    return el("span","tc-due", "Due " + dateTxt);
+  }
+
+  function catChip(task){
+    const c = catById[task.cat] || {label:task.cat, color:"#6B6B7B"};
+    const chip = el("span","cat-chip", c.label);
+    chip.style.color = c.color;
+    chip.style.background = c.color + "18";
+    chip.style.border = "1px solid " + c.color + "44";
+    return chip;
+  }
+
+  function requesterChip(task){
+    if(task.requestedBy === "Dr. Ryan"){
+      const chip = el("span","req-chip req-ryan");
+      chip.appendChild(el("span",null,"⚑"));
+      chip.appendChild(el("span",null,"Dr. Ryan"));
+      return chip;
+    }
+    if(HIGH_REQ.indexOf(task.requestedBy) !== -1){
+      return el("span","req-chip req-high","high-priority · " + task.requestedBy);
+    }
+    return null;
+  }
+
+  /* ================= A. header ================= */
+  $("phase-pill").textContent = DATA.phase;
+  $("updated-line").textContent = "Updated " + DATA.updated;
+
+  /* ================= B. today's focus ================= */
+  function computeFocus(){
+    const open = DATA.tasks.filter(t => t.status !== "done");
+    const picked = [];
+    const has = t => picked.indexOf(t) !== -1;
+    const add = list => { list.forEach(t => { if(picked.length < 5 && !has(t)) picked.push(t); }); };
+
+    add(open.filter(t => t.priority === "urgent"));                       // 1. urgent (Dr. Ryan pennant etc.)
+    add(open.filter(t => t.due && daysUntil(t.due) < 0));                 // 2. overdue
+    add(open.filter(t => t.due && daysUntil(t.due) >= 0 && daysUntil(t.due) <= 7)); // 3. due within 7 days
+    add(open.filter(t => t.status === "inprogress"));                     // 4. in progress
+    add(open.filter(t => t.status === "next"));                           // fill from Up Next
+    return picked.slice(0,5);
+  }
+
+  const focus = computeFocus();
+  $("focus-count").textContent = focus.length + (focus.length === 1 ? " thing" : " things") + " — that's all";
+  const fg = $("focus-grid");
+  focus.forEach(t => {
+    const card = el("div","focus-card");
+
+    const title = el("div","fc-title");
+    if(t.priority === "urgent"){
+      title.appendChild(el("span","fc-flag","⚑"));
+    }
+    title.appendChild(document.createTextNode(t.title));
+    card.appendChild(title);
+
+    card.appendChild(catChip(t));
+
+    const meta = el("div","fc-meta");
+    meta.appendChild(el("span",null, t.waitingOn ? "Waiting on: " + t.waitingOn : "Owner: " + t.owner));
+    if(t.due){
+      const b = dueBadge(t);
+      const n = daysUntil(t.due);
+      if(n < 0){ b.className = "fc-due-over"; }
+      else if(n <= 7){ b.className = "fc-due-soon"; }
+      else { b.className = "fc-due-none"; }
+      meta.appendChild(b);
+    } else {
+      meta.appendChild(el("span","fc-due-none","No due date"));
+    }
+    card.appendChild(meta);
+    fg.appendChild(card);
+  });
+
+  /* ================= C. outcomes ================= */
+  const og = $("outcomes-grid");
+  DATA.outcomes.forEach(o => {
+    const card = el("div","outcome-card");
+    card.appendChild(el("div","oc-label", o.label));
+
+    const nums = el("div","oc-nums");
+    nums.appendChild(el("span","oc-actual", String(o.actual) + (o.unit || "")));
+    nums.appendChild(el("span","oc-target", "/ " + o.target + (o.unit || "") + " target"));
+    card.appendChild(nums);
+
+    const bar = el("div","oc-bar");
+    const fill = el("div","oc-fill");
+    const pct = o.target > 0 ? Math.min(100, (o.actual / o.target) * 100) : 0;
+    fill.style.width = pct + "%";
+    bar.appendChild(fill);
+    card.appendChild(bar);
+
+    card.appendChild(el("div","oc-note", o.note));
+    if(o.verify){
+      const chip = el("span","verify-chip");
+      chip.appendChild(el("span",null,"⚠"));
+      chip.appendChild(el("span",null,"Reconcile with finalized proposal"));
+      card.appendChild(chip);
+    }
+    og.appendChild(card);
+  });
+  $("budget-note").textContent = DATA.budgetNote;
+
+  /* ================= D. kanban + filter ================= */
+  let activeFilter = "all";
+
+  function buildFilterBar(){
+    const bar = $("filter-bar");
+    bar.innerHTML = "";
+    const mk = (id, label) => {
+      const b = el("button","filter-btn" + (activeFilter === id ? " active" : ""), label);
+      b.type = "button";
+      b.addEventListener("click", () => { activeFilter = id; buildFilterBar(); renderKanban(); });
+      bar.appendChild(b);
+    };
+    mk("all","All");
+    DATA.categories.forEach(c => mk(c.id, c.label));
+  }
+
+  function taskCard(t){
+    const card = el("div","task-card");
+
+    const top = el("div","tc-toprow");
+    if(t.priority === "urgent"){ top.appendChild(el("span","tc-flag","⚑")); }
+    const dot = el("span","prio-dot");
+    dot.style.background = PRIO_COLORS[t.priority] || PRIO_COLORS.low;
+    dot.title = t.priority + " priority";
+    top.appendChild(dot);
+    top.appendChild(el("span","tc-title", t.title));
+    card.appendChild(top);
+
+    card.appendChild(catChip(t));
+
+    const req = requesterChip(t);
+    if(req) card.appendChild(req);
+
+    card.appendChild(el("div","tc-meta", t.waitingOn ? "Waiting on: " + t.waitingOn : "Owner: " + t.owner));
+
+    if(t.due){
+      const b = dueBadge(t);
+      if(b) card.appendChild(b);
+    }
+    if(t.note){ card.appendChild(el("div","tc-note", t.note)); }
+    return card;
+  }
+
+  function renderKanban(){
+    const board = $("kanban");
+    board.innerHTML = "";
+    DATA.statuses.forEach(s => {
+      const col = el("div","kcol" + (s.id === "done" ? " is-done" : ""));
+      const tasks = DATA.tasks.filter(t => t.status === s.id && (activeFilter === "all" || t.cat === activeFilter));
+
+      const head = el("div","kcol-head");
+      head.appendChild(el("span","klabel", s.label));
+      head.appendChild(el("span","kcount", String(tasks.length)));
+      col.appendChild(head);
+
+      if(tasks.length === 0){
+        col.appendChild(el("div","kempty", s.id === "done" ? "Nothing here yet — soon." : "Nothing here right now."));
+      } else {
+        tasks.forEach(t => col.appendChild(taskCard(t)));
+      }
+      board.appendChild(col);
+    });
+  }
+
+  buildFilterBar();
+  renderKanban();
+
+  /* ================= E. by category ================= */
+  const cg = $("cat-grid");
+  DATA.categories.forEach(c => {
+    const open = DATA.tasks.filter(t => t.cat === c.id && t.status !== "done");
+    const urgent = open.filter(t => t.priority === "urgent").length;
+    const high = open.filter(t => t.priority === "high").length;
+
+    const card = el("div","cat-card");
+    card.style.borderTopColor = c.color;
+    card.appendChild(el("div","cc-label", c.label));
+    const count = el("div","cc-count", String(open.length) + " ");
+    count.appendChild(el("small", null, open.length === 1 ? "open task" : "open tasks"));
+    card.appendChild(count);
+    const bits = [];
+    if(urgent) bits.push(urgent + " urgent");
+    if(high) bits.push(high + " high");
+    card.appendChild(el("div","cc-weight", bits.length ? bits.join(" · ") : (open.length ? "steady" : "clear")));
+    cg.appendChild(card);
+  });
+
+  /* ================= F. quick links ================= */
+  const LINKS = [
+    {label:"Budget / Proposal", file:"Updated Stone Youth Pathways Proposal.xlsx", tag:"XLSX", color:"#0E9384"},
+    {label:"Project Narrative", file:"St. Jospeh Center_Stone Foundation_Youth Pathways Proposal_042126-1.pdf", tag:"PDF", color:"#FF6B57"},
+    {label:"Task List by Department", file:"Youth Pathways South LA - Task List by Department.xlsx", tag:"XLSX", color:"#0E9384"},
+    {label:"Program Design & Journeys", file:"Youth Pathways South LA - Program Design & Journeys.docx", tag:"DOCX", color:"#5B4BE0"},
+    {label:"Program Design Visual", file:"Youth Pathways South LA - Program Design Visual.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Stakeholder Dashboard", file:"Youth Pathways South LA - Project Dashboard.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Kickoff Agenda", file:"Youth Pathways South LA - Kickoff Meeting Agenda.docx", tag:"DOCX", color:"#5B4BE0"}
+  ];
+  const lg = $("links-grid");
+  LINKS.forEach(l => {
+    const a = document.createElement("a");
+    a.className = "link-card";
+    a.href = l.file;
+    const icon = el("span","lk-icon", l.tag);
+    icon.style.background = l.color;
+    a.appendChild(icon);
+    const txt = el("span","lk-text");
+    txt.appendChild(el("span","lk-label", l.label));
+    const f = el("span","lk-file", l.file);
+    f.style.display = "block";
+    txt.appendChild(f);
+    a.appendChild(txt);
+    lg.appendChild(a);
+  });
+
+  /* ================= H. footer ================= */
+  $("footer").textContent = "St. Joseph Center — Youth Pathways South LA · Private working tool · " + DATA.updated;
+})();
+</script>
+</body>
+</html>
