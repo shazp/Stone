@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Youth Pathways — Master PM Dashboard</title>
+<title>North Star — Sharon's Master PM Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -289,8 +289,8 @@
   <header>
     <div class="logo" aria-hidden="true"></div>
     <div class="head-text">
-      <h1>Youth Pathways — Master PM</h1>
-      <div class="sub">Sharon's project brain &middot; private</div>
+      <h1>North Star</h1>
+      <div class="sub">Sharon's master PM dashboard &middot; Youth Pathways South LA &middot; private</div>
     </div>
     <div class="head-meta">
       <span class="pill-phase" id="phase-pill"></span>
@@ -382,8 +382,8 @@
    }]
    ===================================================================== */
 const DATA = {
- updated: "July 6, 2026",
- phase: "Pre-Launch / Planning",
+ updated: "July 16, 2026",
+ phase: "Grant Active · Pre-Launch Build",
  categories: [
   {id:"planning", label:"Project Planning & Launch", color:"#5B4BE0"},
   {id:"staff", label:"Staff Recruitment & Hiring", color:"#0E9384"},
@@ -404,21 +404,21 @@ const DATA = {
   {id:"done", label:"Done"}
  ],
  outcomes: [
-  {label:"Youth enrolled (entry)", actual:0, target:140, unit:"", note:"70 in Yr1 + 70 in Yr2", verify:false},
+  {label:"Youth enrolled (entry)", actual:0, target:150, unit:"", note:"70 in Yr1 + 80 in Yr2 (unduplicated)", verify:false},
   {label:"Into workforce tracks (Codetalk/Fortifi)", actual:0, target:80, unit:"", note:"40 per year", verify:false},
   {label:"Graduates (Codetalk/Fortifi)", actual:0, target:64, unit:"", note:"80% of enrolled", verify:false},
   {label:"Living-wage / career placement", actual:0, target:50, unit:"", note:"~80% of grads; also tracked as 75% within 12 mo", verify:false},
   {label:"Justice-involved avoid reoffending (12 mo)", actual:0, target:90, unit:"%", note:"90% target", verify:false},
-  {label:"Progress toward economic mobility", actual:0, target:126, unit:"", note:"90% of all youth", verify:false}
+  {label:"Progress toward economic mobility", actual:0, target:135, unit:"", note:"90% of all youth (150)", verify:false}
  ],
- budgetNote: "Budget confirmed from the finalized proposal (Jul 2026): Stone request $1,818,858 over 2 years — Yr1 $911,531 · Yr2 $907,327 · about $8,268 per client. Team: 8.0 FTE (5 new hires + 3 allocated) + 2 consultants.",
+ budgetNote: "SIGNED GRANT (6/26/2026): $1,800,000 over 2 yrs. Two payments of $900,000 — #1 due 7/1/2026 (received), #2 due 7/1/2027 CONDITIONAL on approved reports + progress. Term 7/1/2026–6/30/2028. Serving 150 unduplicated youth (~$12,000/youth). Proposed budget was $1,818,858 → ~$18,858 gap to absorb. Team: 8.0 FTE + 2 consultants. Biannual reports due 1/1/27, 7/1/27, 1/1/28, 6/30/28.",
  tasks: [
   {id:1, title:"Own & build the Youth Pathways South LA project plan", cat:"planning", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"Laurie supporting."},
-  {id:2, title:"Review final Stone proposal before submission to Sarah", cat:"planning", status:"waiting", priority:"urgent", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"Dr. Ryan reviewing before it goes to Sarah (Stone)."},
-  {id:3, title:"Be fluent in the per-student / per-cohort cost story for the board", cat:"budget", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Executive Leadership", due:null, note:"Budget confirmed: Stone request $1,818,858 / 2 yrs (~$8,268 per client). Board flagged cost — be ready to explain the economics."},
+  {id:2, title:"Stone grant executed — proposal reviewed & signed", cat:"planning", status:"done", priority:"medium", owner:"Dr. Ryan", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"Grant Agreement signed by Dr. Ryan & Sarah Yun 6/26/2026. $1.8M, term 7/1/26–6/30/28."},
+  {id:3, title:"Be fluent in the per-student / per-cohort cost story for the board", cat:"budget", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Executive Leadership", due:null, note:"Grant awarded $1.8M for 150 youth (~$12,000/youth). Proposed budget was $1,818,858 → ~$18,858 gap to absorb. Board flagged cost — be ready to explain the economics."},
   {id:4, title:"Plan recruitment for a January 2027 cohort start", cat:"recruit", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"If Stone approves soon, recruitment could begin this fall."},
-  {id:5, title:"Talk to Ginneh about South LA space (interim + full building)", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Earliest space ~September 1."},
-  {id:6, title:"Acquire full South LA building — approach building owner", cat:"ops", status:"waiting", priority:"urgent", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"First to Serve needs ~60 days notice."},
+  {id:5, title:"Site visit to South LA building (Broadway & Manchester) with Ginneh", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-08-03", note:"Building SECURED at Broadway & Manchester ✓. Site visit scheduled Mon Aug 3 with Ginneh — walk space, assess readiness/computer lab, confirm move-in timeline."},
+  {id:6, title:"Acquire full South LA building — approach building owner", cat:"ops", status:"done", priority:"urgent", owner:"Dr. Ryan", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"SECURED ✓ — building at Broadway & Manchester. Site visit 8/3 with Ginneh; next step is prep (see task 25)."},
   {id:7, title:"Attend South LA Child Fair — bring cards, map employer landscape", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Confirm date."},
   {id:8, title:"Pick Eddie Anderson's brain on South LA youth workforce resources", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Referrals & recruitment networks for 18–30 foster/TAY."},
   {id:9, title:"Determine case manager backfill if Morgan is promoted to PM", cat:"staff", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
@@ -437,7 +437,7 @@ const DATA = {
   {id:22, title:"Finalize job descriptions for the new roles", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:23, title:"Update intake/application process for standardized data", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Include justice-involved fields."},
   {id:24, title:"Set up participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
-  {id:25, title:"Secure & prepare program space + computer lab (20 laptops)", cat:"ops", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:25, title:"Prepare program space + computer lab (20 laptops)", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Space SECURED at Broadway & Manchester ✓. After 8/3 site visit, plan build-out: computer lab, furniture, safety, move-in."},
   {id:26, title:"Develop community outreach & recruitment plan", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:27, title:"Confirm/develop curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:28, title:"Decide data platform: keep SM YRT in Clarity; Youth Pathways → Salesforce", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"One system or two?"},
@@ -446,7 +446,23 @@ const DATA = {
   {id:31, title:"Set up program in accounting system + consultant agreements", cat:"budget", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"MH Clinician; Gang Prevention consultants."},
   {id:32, title:"Speak to Steve Morse re: Redefine Alliance", cat:"other", status:"waiting", priority:"medium", owner:"Sharon", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"SEPARATE PROJECT — Redefine Alliance, not Youth Pathways. Application now submitted; confirm if this call is still needed."},
   {id:33, title:"Redefine Alliance $50K incubator application — submitted", cat:"other", status:"done", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Submitted ✓ (Jul 6, 2026). SEPARATE PROJECT — Redefine Alliance, not part of Youth Pathways."},
-  {id:34, title:"Align with Laurie on reducing culinary cohorts 5 → 4, then tell team", cat:"other", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"Part of 10% cost reduction; frame as quality investment."}
+  {id:34, title:"Align with Laurie on reducing culinary cohorts 5 → 4, then tell team", cat:"other", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"SEPARATE PROJECT — culinary social enterprise, not Youth Pathways. Part of 10% cost reduction."},
+  {id:35, title:"Stand up Young Adults Forward Fund biannual reporting (template + Salesforce capture)", cat:"budget", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Stone Foundation", due:null, note:"Grant requires biannual written + financial reports on the Fund's template + a check-in meeting. Build data capture with Elise so reporting is painless. PAYMENT 2 ($900K, 7/1/2027) is conditional on approved reports + progress."},
+  {id:36, title:"1st biannual grant report to the Fund + check-in meeting", cat:"budget", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Stone Foundation", due:"2027-01-01", note:"First of four: 1/1/27, 7/1/27, 1/1/28, 6/30/28 (final). Uses the Fund's reporting template."},
+  {id:37, title:"Notify the Fund of any material changes (leadership / board / finances)", cat:"budget", status:"backlog", priority:"low", owner:"Sharon", waitingOn:"", requestedBy:"Stone Foundation", due:null, note:"Standing grant obligation — prompt written notice required."},
+
+  {id:38, title:"Draft overall project plan + cascading plans (YRT, Ops, Recruitment) for Laurie review", cat:"planning", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"From Dr. Ryan email (RJS): first draft of the overall project plan incl. cascading sub-plans for the Youth Resource Team, operations, and recruitment; you + Laurie review first."},
+  {id:39, title:"Dr. Ryan to review project plan on his return", cat:"planning", status:"waiting", priority:"medium", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"RJS OOO ~2 weeks (from ~Jul 9); will review the drafted project plan when back."},
+  {id:40, title:"Advance PM, Youth Workforce Development recruitment + align with Laurie on resume/candidate process", cat:"staff", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS email: keep the hire moving; Jaz cc'd for visibility; align with Laurie on how resumes are reviewed and candidates selected."},
+  {id:41, title:"Attend Youth Conference + share key takeaways (esp. New Ways to Work)", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS email: bring back anything from New Ways to Work that could strengthen our approach."},
+  {id:42, title:"Send follow-up email to broader group outlining next steps", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS email: recap next steps to the wider group."},
+  {id:43, title:"Schedule next progress meeting for late July / early August", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS email: review progress, what's working, and where more support is needed."},
+  {id:44, title:"Build Q3 recruitment strategy: recruit ≥80 young adults to retain 40 by Jan 2027", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS goal: 80 recruited this quarter → 40 retained entering January 2027."},
+  {id:45, title:"Mobilize case managers & SJC staff to identify/refer eligible 18–30-year-olds", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS question: how to better leverage case managers and other SJC staff for referrals."},
+  {id:46, title:"Evaluate an internal referral incentive (gift cards / recognition)", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS question: modest incentive to encourage staff referrals — decide if/how."},
+  {id:47, title:"Introduce program at July 28 All-SJC Leadership Lunch (Natalie to present — Sharon OOO)", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"Natalie", requestedBy:"Dr. Ryan", due:"2026-07-28", note:"RJS: use the All-SJC Leadership Lunch to start generating org-wide referrals; brief Natalie to deliver since you're OOO."},
+  {id:48, title:"Communicate SNAP-retention eligibility to prospective participants", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS: more intentionally message that eligible participants may keep SNAP benefits while in the program, if applicable."},
+  {id:49, title:"Intro meeting with CRCD (referral partnership + employer network)", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-20", note:"Meeting set for Mon 7/20. CRCD = model South LA youth workforce org (VCN YouthSource, CRCD Enterprises, LA:RISE). Explore referral MOU + learn their employer/apprenticeship pipeline. See the Youth Book."}
  ]
 };
 
@@ -693,13 +709,17 @@ const DATA = {
 
   /* ================= F. quick links ================= */
   const LINKS = [
-    {label:"Budget / Proposal", file:"Updated Stone Youth Pathways Proposal.xlsx", tag:"XLSX", color:"#0E9384"},
+    {label:"★ The Youth Book — Partners, Employers & Resources", file:"YP Youth Book.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Youth Book — Staff Edition (shareable)", file:"YP Youth Book (Staff).html", tag:"HTML", color:"#8FB61E"},
+    {label:"★ Signed Grant Agreement", file:"20260623 Young Adult Forward Fund (Stone Family Foundation Whittier Trust) Grant Agreement.pdf", tag:"PDF", color:"#5B4BE0"},
+    {label:"★ Final Objectives / Outcomes", file:"Youth Pathways South LA Objectives (Stone Grant Agreement) 6.22.26.pdf", tag:"PDF", color:"#FF6B57"},
+    {label:"Budget (Proposal xlsx)", file:"Updated Stone Youth Pathways Proposal.xlsx", tag:"XLSX", color:"#0E9384"},
     {label:"Project Narrative", file:"St. Jospeh Center_Stone Foundation_Youth Pathways Proposal_042126-1.pdf", tag:"PDF", color:"#FF6B57"},
-    {label:"Task List by Department", file:"Youth Pathways South LA - Task List by Department.xlsx", tag:"XLSX", color:"#0E9384"},
-    {label:"Program Design & Journeys", file:"Youth Pathways South LA - Program Design & Journeys.docx", tag:"DOCX", color:"#5B4BE0"},
-    {label:"Program Design Visual", file:"Youth Pathways South LA - Program Design Visual.html", tag:"HTML", color:"#8FB61E"},
-    {label:"Stakeholder Dashboard", file:"Youth Pathways South LA - Project Dashboard.html", tag:"HTML", color:"#8FB61E"},
-    {label:"Kickoff Agenda", file:"Youth Pathways South LA - Kickoff Meeting Agenda.docx", tag:"DOCX", color:"#5B4BE0"}
+    {label:"Task List by Department", file:"YP Task List by Department.xlsx", tag:"XLSX", color:"#0E9384"},
+    {label:"Program Design & Journeys", file:"YP Program Design & Journeys.docx", tag:"DOCX", color:"#5B4BE0"},
+    {label:"Program Design Visual", file:"YP Program Design Visual.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Stakeholder Dashboard", file:"YP Project Dashboard.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Kickoff Agenda", file:"YP Kickoff Meeting Agenda.docx", tag:"DOCX", color:"#5B4BE0"}
   ];
   const lg = $("links-grid");
   LINKS.forEach(l => {
