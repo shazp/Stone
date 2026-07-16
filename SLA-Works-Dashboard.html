@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLA Works — Youth Pathways South LA · Leadership Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1E5A3C; --green-d:#123A26; --green-t:#EAF3E6;
+    --citron:#C8D93B; --citron-d:#93A31C; --citron-t:#F5F8DF;
+    --moss:#4E7A3A; --teal:#0E9384; --amber:#E8A13C; --coral:#E4644E;
+    --ink:#17201A; --sub:#57645A; --line:#DCE6D6; --bg:#FDFDF9;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif; color:var(--ink); background:var(--bg);
+    background-image:radial-gradient(ellipse 900px 620px at 92% -6%, rgba(30,90,60,.12), rgba(200,217,59,.05) 45%, transparent 70%);
+    background-repeat:no-repeat; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1240px; margin:0 auto; padding:36px 28px 60px;}
+  .eyebrow{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--moss); font-weight:700;}
+
+  /* ---------- header ---------- */
+  header{display:flex; flex-wrap:wrap; align-items:flex-start; gap:18px; margin-bottom:8px;}
+  .logo{width:46px; height:46px; border-radius:13px; background:var(--green); position:relative; flex:0 0 auto; box-shadow:0 6px 18px rgba(30,90,60,.30);}
+  .logo::after{content:""; position:absolute; right:-5px; bottom:-5px; width:16px; height:16px; border-radius:6px; background:var(--citron); border:2.5px solid var(--bg);}
+  .logo::before{content:""; position:absolute; left:12px; top:12px; width:22px; height:22px; border-radius:50%; border:3px solid rgba(255,255,255,.92); border-right-color:transparent; transform:rotate(-45deg);}
+  .head-text{flex:1 1 340px; min-width:260px;}
+  .head-text h1{font-family:'Sora',sans-serif; font-size:27px; font-weight:800; letter-spacing:-.02em; line-height:1.2;}
+  .head-text .sub{color:var(--sub); font-size:14px; margin-top:3px;}
+  .head-meta{display:flex; flex-direction:column; align-items:flex-end; gap:8px; margin-left:auto;}
+  .pill{display:inline-block; padding:6px 14px; border-radius:999px; background:var(--green-t); color:var(--green-d); border:1px solid var(--line);
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap;}
+  .updated{font-family:'Space Mono',monospace; font-size:11.5px; color:var(--sub);}
+
+  /* ---------- status banner ---------- */
+  .banner{margin-top:22px; border-radius:16px; padding:24px 26px; background:linear-gradient(135deg,#FBFDF4 0%, var(--green-t) 100%);
+    border:1.5px solid #CFE0C6; box-shadow:0 10px 34px rgba(30,90,60,.10); display:flex; flex-wrap:wrap; gap:22px; align-items:center;}
+  .health{display:flex; align-items:center; gap:10px;}
+  .health .dot{width:14px; height:14px; border-radius:50%; background:var(--moss); box-shadow:0 0 0 5px rgba(78,122,58,.18);}
+  .health b{font-family:'Sora',sans-serif; font-size:20px; font-weight:800; letter-spacing:-.01em; color:var(--green-d);}
+  .banner p{flex:1 1 380px; min-width:280px; font-size:14px; color:var(--sub); line-height:1.6;}
+  .countdown{text-align:center; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 22px;}
+  .countdown b{font-family:'Sora',sans-serif; font-size:30px; font-weight:800; color:var(--green); display:block; line-height:1.1;}
+  .countdown span{font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--sub);}
+
+  /* ---------- section frame ---------- */
+  .sec-head{display:flex; align-items:center; gap:2px; margin:46px 0 6px;}
+  .chipnum{display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px; background:var(--green); color:#fff;
+    font-family:'Space Mono',monospace; font-size:12px; font-weight:700; margin-right:10px; flex:0 0 auto;}
+  .sec-head h2{font-family:'Sora',sans-serif; font-size:21px; font-weight:700; letter-spacing:-.01em;}
+  .sec-sub{color:var(--sub); font-size:13.5px; margin:2px 0 18px 36px;}
+
+  /* ---------- milestones ---------- */
+  .phases{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:13px; margin-bottom:20px;}
+  .phase{border:1.5px solid var(--line); border-radius:14px; padding:16px 18px; background:#fff; position:relative; overflow:hidden;}
+  .phase.current{border-color:var(--moss); box-shadow:0 6px 20px rgba(78,122,58,.14);}
+  .phase .ph-tag{font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--sub);}
+  .phase.current .ph-tag{color:var(--moss);}
+  .phase h3{font-family:'Sora',sans-serif; font-size:16px; font-weight:700; margin:4px 0 2px;}
+  .phase .ph-when{font-family:'Space Mono',monospace; font-size:11.5px; color:var(--green-d); font-weight:700;}
+  .phase .ph-desc{font-size:12.5px; color:var(--sub); margin-top:7px; line-height:1.5;}
+  .phase .ph-bar{height:7px; border-radius:999px; background:#EFF3E9; margin-top:12px; overflow:hidden;}
+  .phase .ph-fill{height:100%; border-radius:999px; background:linear-gradient(90deg,var(--moss),var(--citron));}
+  .phase.launch{background:linear-gradient(135deg,#fff, var(--citron-t));}
+  .mlist{border:1px solid var(--line); border-radius:14px; background:#fff; padding:8px 0;}
+  .mrow{display:flex; align-items:baseline; gap:14px; padding:10px 20px; border-bottom:1px dashed var(--line); font-size:13.5px;}
+  .mrow:last-child{border-bottom:none;}
+  .mrow .mdate{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--sub); min-width:86px; flex:0 0 auto;}
+  .mrow .mdot{width:11px; height:11px; border-radius:50%; flex:0 0 auto; position:relative; top:1px;}
+  .m-done .mdot{background:var(--moss);} .m-done .mtext{color:var(--ink);}
+  .m-next .mdot{background:var(--citron-d);}
+  .m-future .mdot{background:#C9D4C4;} .m-future .mtext{color:var(--sub);}
+  .m-launch .mdot{background:var(--coral); box-shadow:0 0 0 4px rgba(228,100,78,.15);}
+  .m-launch .mtext{font-weight:700; font-family:'Sora',sans-serif;}
+  .mrow .mcheck{font-family:'Space Mono',monospace; font-size:11px; color:var(--moss); font-weight:700; margin-left:auto;}
+
+  /* ---------- priorities ---------- */
+  .prio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px;}
+  .prio-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:15px 16px 13px; display:flex; flex-direction:column; gap:7px; box-shadow:0 2px 8px rgba(23,32,26,.04);}
+  .prio-card .pc-title{font-family:'Sora',sans-serif; font-size:14px; font-weight:700; line-height:1.35;}
+  .pc-meta{font-size:12px; color:var(--sub);}
+  .pc-due{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--amber); letter-spacing:.04em;}
+
+  /* ---------- outcomes ---------- */
+  .prelaunch-note{border-radius:12px; padding:12px 16px; background:var(--citron-t); border:1px solid #E3EBB8; font-size:13px; color:#5c6620; margin-bottom:14px;}
+  .outcomes-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;}
+  .outcome-card{border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; background:#fff;}
+  .oc-label{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700; line-height:1.35; min-height:2.6em;}
+  .oc-nums{display:flex; align-items:baseline; gap:6px; margin:8px 0;}
+  .oc-actual{font-family:'Sora',sans-serif; font-size:26px; font-weight:800; color:var(--green);}
+  .oc-target{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--sub);}
+  .oc-bar{height:8px; border-radius:999px; background:#EFF3E9; overflow:hidden;}
+  .oc-fill{height:100%; border-radius:999px; background:var(--green); min-width:0;}
+  .oc-note{font-size:12px; color:var(--sub); margin-top:8px;}
+
+  /* ---------- program tracker ---------- */
+  .track-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
+  .track-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:16px;}
+  .track-card .tc-stage{font-family:'Space Mono',monospace; font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--moss);}
+  .track-card h3{font-family:'Sora',sans-serif; font-size:15px; font-weight:700; margin:4px 0 6px;}
+  .track-card .tc-stat{font-family:'Sora',sans-serif; font-size:22px; font-weight:800; color:var(--green);}
+  .track-card .tc-stat small{font-family:'Space Mono',monospace; font-size:11px; color:var(--sub); font-weight:400;}
+  .track-card p{font-size:12px; color:var(--sub); margin-top:6px; line-height:1.5;}
+
+  /* ---------- board ---------- */
+  .kanban{display:grid; grid-template-columns:repeat(5,minmax(212px,1fr)); gap:13px; overflow-x:auto; padding-bottom:8px;}
+  .kcol{background:#F6F8F2; border:1px solid var(--line); border-radius:13px; padding:12px;}
+  .kcol h3{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--sub); margin-bottom:10px; display:flex; justify-content:space-between;}
+  .kcount{background:#fff; border:1px solid var(--line); border-radius:999px; padding:0 8px;}
+  .task-card{background:#fff; border:1px solid var(--line); border-radius:11px; padding:11px 12px; margin-bottom:9px; font-size:12.5px;}
+  .task-card .tt{font-weight:700; line-height:1.35; font-family:'Sora',sans-serif; font-size:12.5px;}
+  .task-card .tm{color:var(--sub); font-size:11.5px; margin-top:5px;}
+  .task-card .towner{font-family:'Space Mono',monospace; font-size:10px; font-weight:700; color:var(--green-d); margin-top:6px; display:block;}
+  .tcat{display:inline-block; font-family:'Space Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 7px; border-radius:6px; margin-top:7px;}
+  .tdue{font-family:'Space Mono',monospace; font-size:10px; font-weight:700; color:var(--amber); margin-left:6px;}
+
+  /* ---------- weight ---------- */
+  .weight{border:1px solid var(--line); border-radius:14px; background:#fff; padding:18px 20px;}
+  .wrow{display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+  .wrow:last-child{margin-bottom:0;}
+  .wlabel{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; min-width:120px; color:var(--sub); text-transform:uppercase; letter-spacing:.04em;}
+  .wbar{flex:1; height:12px; border-radius:999px; background:#EFF3E9; overflow:hidden;}
+  .wfill{height:100%; border-radius:999px;}
+  .wnum{font-family:'Space Mono',monospace; font-size:11.5px; font-weight:700; color:var(--green-d); min-width:22px; text-align:right;}
+
+  /* ---------- departments ---------- */
+  .dept-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px;}
+  .dept-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:15px 16px;}
+  .dept-card h3{font-family:'Sora',sans-serif; font-size:14.5px; font-weight:700;}
+  .dept-status{display:inline-block; font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:2px 9px; border-radius:6px; margin:7px 0 6px;}
+  .ds-motion{background:var(--green-t); color:var(--green-d);}
+  .ds-starting{background:var(--citron-t); color:#79860f;}
+  .ds-queued{background:#F0F1EC; color:var(--sub);}
+  .dept-card p{font-size:12px; color:var(--sub); line-height:1.5;}
+  .dept-card .dcount{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--sub); display:block; margin-top:7px;}
+
+  /* ---------- activity ---------- */
+  .feed{border:1px solid var(--line); border-radius:14px; background:#fff; padding:6px 0;}
+  .frow{display:flex; gap:16px; padding:12px 20px; border-bottom:1px dashed var(--line); font-size:13.5px;}
+  .frow:last-child{border-bottom:none;}
+  .fdate{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--moss); min-width:70px; flex:0 0 auto; padding-top:2px;}
+  .ftext b{font-weight:700;}
+  .ftag{display:inline-block; font-family:'Space Mono',monospace; font-size:9px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:1px 7px; border-radius:6px; background:var(--green-t); color:var(--green-d); margin-left:8px; position:relative; top:-1px;}
+
+  /* ---------- links ---------- */
+  .links-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px;}
+  a.link-card{display:flex; gap:12px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:13px; padding:14px 16px; text-decoration:none; color:var(--ink); transition:all .15s ease;}
+  a.link-card:hover{border-color:var(--green); box-shadow:0 5px 16px rgba(30,90,60,.12);}
+  .lk-icon{display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:30px; border-radius:8px; color:#fff; font-family:'Space Mono',monospace; font-size:10px; font-weight:700;}
+  .lk-label{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700; display:block;}
+  .lk-file{font-size:11px; color:var(--sub);}
+  .req-note{font-size:12.5px; color:var(--sub); margin-top:12px; line-height:1.6;}
+
+  /* ---------- about ---------- */
+  .how-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:13px;}
+  .how-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:17px 18px;}
+  .how-card h3{font-family:'Sora',sans-serif; font-size:14.5px; font-weight:700; margin-bottom:7px; color:var(--green-d);}
+  .how-card p{font-size:12.5px; color:var(--sub); line-height:1.6;}
+
+  footer{margin-top:44px; padding-top:18px; border-top:1px solid var(--line); font-size:12px; color:var(--sub); line-height:1.6; display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between;}
+  @media (max-width:900px){.kanban{grid-template-columns:repeat(5,240px);}}
+  @media print{body{background:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo" aria-hidden="true"></div>
+    <div class="head-text">
+      <div class="eyebrow">St. Joseph Center · Young Adults Forward Fund</div>
+      <h1>SLA Works</h1>
+      <div class="sub">Youth Pathways South LA — Leadership Dashboard</div>
+    </div>
+    <div class="head-meta">
+      <span class="pill" id="phase-pill">Phase 1 · Project &amp; Planning</span>
+      <span class="updated" id="updated-line"></span>
+    </div>
+  </header>
+
+  <!-- STATUS BANNER -->
+  <div class="banner">
+    <div class="health"><span class="dot"></span><b>ON TRACK</b></div>
+    <p id="banner-text"></p>
+    <div class="countdown"><b id="days-out">—</b><span>days to launch<br>Nov 4, 2026</span></div>
+  </div>
+
+  <!-- 01 MILESTONES -->
+  <div class="sec-head"><span class="chipnum">01</span><h2>Milestones &amp; Timeline</h2></div>
+  <p class="sec-sub">Three phases from planning to launch. Progress bars show where we are inside each phase.</p>
+  <div class="phases" id="phases"></div>
+  <div class="mlist" id="milestones"></div>
+
+  <!-- 02 CURRENT PRIORITIES -->
+  <div class="sec-head"><span class="chipnum">02</span><h2>Current Priorities</h2></div>
+  <p class="sec-sub">What the project team is actively driving right now.</p>
+  <div class="prio-grid" id="priorities"></div>
+
+  <!-- 03 OUTCOMES -->
+  <div class="sec-head"><span class="chipnum">03</span><h2>Outcomes vs Targets</h2></div>
+  <p class="sec-sub">Grant-agreement outcomes over the two-year term.</p>
+  <div class="prelaunch-note">📍 <b>Pre-launch:</b> targets are locked per the signed grant agreement; participant counts begin at program launch (Nov 4, 2026). Salesforce outcome tracking is being built now so day-one data is clean.</div>
+  <div class="outcomes-grid" id="outcomes"></div>
+
+  <!-- 04 PROGRAM TRACKER -->
+  <div class="sec-head"><span class="chipnum">04</span><h2>Program Tracker</h2></div>
+  <p class="sec-sub">The build-out of each program component, from design through delivery. Counters activate as the program moves into implementation.</p>
+  <div class="track-grid" id="tracker"></div>
+
+  <!-- 05 THE BOARD -->
+  <div class="sec-head"><span class="chipnum">05</span><h2>The Board</h2></div>
+  <p class="sec-sub">Active project workstream — curated to the items relevant for leadership visibility.</p>
+  <div class="kanban" id="kanban"></div>
+
+  <!-- 06 WHERE THE WEIGHT IS -->
+  <div class="sec-head"><span class="chipnum">06</span><h2>Where the Weight Is</h2></div>
+  <p class="sec-sub">Open tasks by category — a quick read on which areas carry the most work right now.</p>
+  <div class="weight" id="weight"></div>
+
+  <!-- 07 DEPARTMENT WORKSTREAMS -->
+  <div class="sec-head"><span class="chipnum">07</span><h2>Department Workstreams</h2></div>
+  <p class="sec-sub">Every SJC department engaged in the launch, and where each stands. Detail lives in the department task plan (available on request).</p>
+  <div class="dept-grid" id="depts"></div>
+
+  <!-- 08 ACTIVITY -->
+  <div class="sec-head"><span class="chipnum">08</span><h2>Activity &amp; Engagements</h2></div>
+  <p class="sec-sub">Meetings held, decisions made, and milestones reached — most recent first.</p>
+  <div class="feed" id="feed"></div>
+
+  <!-- 09 QUICK LINKS -->
+  <div class="sec-head"><span class="chipnum">09</span><h2>Quick Links</h2></div>
+  <p class="sec-sub">Live project documents. Items marked “on request” are available from the project lead.</p>
+  <div class="links-grid" id="links-grid"></div>
+  <p class="req-note" id="req-note"></p>
+
+  <!-- 10 ABOUT -->
+  <div class="sec-head"><span class="chipnum">10</span><h2>About This Dashboard</h2></div>
+  <p class="sec-sub">What SLA Works is for, and how to use it.</p>
+  <div class="how-grid">
+    <div class="how-card"><h3>Purpose</h3><p>A single, always-current reference for the scope, progress, and milestones of Youth Pathways South LA. Open it any time you want to know where the project stands — no need to wait for a status meeting.</p></div>
+    <div class="how-card"><h3>How it stays current</h3><p>Updated every Monday morning, and immediately after major developments. The “Updated” date at the top right tells you exactly how fresh what you're reading is.</p></div>
+    <div class="how-card"><h3>Reading it in 30 seconds</h3><p>The banner tells you overall health. Milestones show trajectory to the Nov 4 launch. Current Priorities show this week's focus. Everything below is depth when you want it.</p></div>
+    <div class="how-card"><h3>Have input?</h3><p>This dashboard is two-way. If you want something added, tracked, or corrected — or want deeper detail on any item — tell Sharon and it will appear in the next update.</p></div>
+    <div class="how-card"><h3>What it is not</h3><p>This is a management view, not the system of record. Participant-level data and outcome reporting live in Salesforce (build in progress, with the Data team) and will feed the Outcomes section from launch onward.</p></div>
+    <div class="how-card"><h3>Maintained by</h3><p>Sharon Plunkett, Project Lead — Youth Pathways South LA. Questions, corrections, and requests welcome any time.</p></div>
+  </div>
+
+  <footer>
+    <span>St. Joseph Center — Youth Pathways South LA · SLA Works Leadership Dashboard</span>
+    <span id="footer-updated"></span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* =====================================================================
+   DATA — updated by Sharon + Claude from the master project plan.
+   ===================================================================== */
+const DATA = {
+updated: "July 16, 2026",
+banner: "Planning is on schedule. The grant is executed and funded, the South LA site at Broadway & Manchester is secured, hiring for the core team is in motion, and partnership outreach has begun. Full project plan goes to leadership review in early August.",
+
+phases: [
+ {tag:"Phase 1 · Current", name:"Project & Planning", when:"July – August", pct:45, current:true,
+  desc:"Project plan, governance, hiring, space, curriculum & data systems stood up."},
+ {tag:"Phase 2", name:"Outreach & Recruitment", when:"September – October", pct:0, current:false,
+  desc:"Community outreach, staff & partner referrals, candidate assessment — goal: 80 young adults recruited."},
+ {tag:"Phase 3", name:"Launch", when:"November 4, 2026", pct:0, current:false, launch:true,
+  desc:"Program opens: Youth Resource Team + workforce tracks live at the South LA site."}
+],
+
+milestones: [
+ {date:"Jun 26", text:"Grant agreement executed — $1.8M over 2 years (Young Adults Forward Fund)", state:"done"},
+ {date:"Jul 1",  text:"First grant payment received ($900K)", state:"done"},
+ {date:"Jul 16", text:"South LA site secured — Broadway & Manchester", state:"done"},
+ {date:"Jul 20", text:"Partnership meeting: CRCD (referrals + employer network)", state:"next"},
+ {date:"Jul 28", text:"Program introduced at All-SJC Leadership Lunch", state:"next"},
+ {date:"Aug 3",  text:"Site visit & space plan (Broadway & Manchester)", state:"next"},
+ {date:"Early Aug", text:"Full project plan → leadership review", state:"next"},
+ {date:"Sep 1",  text:"Outreach & recruitment phase opens", state:"future"},
+ {date:"Oct",    text:"Core team hired & onboarded", state:"future"},
+ {date:"Late Oct", text:"80 young adults recruited (retention goal: 40 into January)", state:"future"},
+ {date:"Nov 4",  text:"PROGRAM LAUNCH — Youth Pathways South LA opens", state:"launch"},
+ {date:"Jan 2027", text:"First full cohort enters workforce tracks", state:"future"}
+],
+
+priorities: [
+ {title:"Draft the full project plan (incl. Youth Resource Team, operations & recruitment sub-plans)", meta:"Sharon — Project Lead, with Laurie", due:"Leadership review early Aug"},
+ {title:"Hire Program Manager, Youth Workforce Development", meta:"Recruitment in motion; selection process aligned with leadership", due:""},
+ {title:"Q3 recruitment strategy — 80 young adults recruited, 40 retained into Jan 2027", meta:"Sharon + program team", due:"Strategy set before Sep 1"},
+ {title:"CRCD partnership meeting — referrals & employer network", meta:"Sharon", due:"Jul 20"},
+ {title:"Introduce program at All-SJC Leadership Lunch", meta:"Natalie presenting", due:"Jul 28"},
+ {title:"Site visit & build-out plan for Broadway & Manchester", meta:"Sharon + Ginneh — Operations", due:"Aug 3"}
+],
+
+outcomes: [
+ {label:"Youth enrolled (entry)", actual:0, target:150, note:"70 in Yr 1 + 80 in Yr 2 (unduplicated)"},
+ {label:"Into workforce tracks (Codetalk / Fortifi)", actual:0, target:80, note:"40 per year"},
+ {label:"Graduates (Codetalk / Fortifi)", actual:0, target:64, note:"80% of enrolled"},
+ {label:"Living-wage / career placement", actual:0, target:50, note:"~80% of grads; 75% within 12 months"},
+ {label:"Justice-involved avoid reoffending (12 mo)", actual:0, target:90, unit:"%", note:"90% target"},
+ {label:"Progress toward economic mobility", actual:0, target:135, note:"90% of all youth served"}
+],
+
+tracker: [
+ {stage:"Stage 1", name:"Program Design", stat:"In progress", desc:"Program model, participant journeys, and intake process in active design; curriculum framework set."},
+ {stage:"Stage 2", name:"Courses & Classes", stat:"3 <small>in design</small>", desc:"Foundational Workforce Readiness, Codetalk (project management & technology skills), and Fortifi — launching with the program."},
+ {stage:"Stage 3", name:"Recruitment", stat:"Opens Sep", desc:"Target: 80 young adults (ages 18–30) this quarter. Sourcing via SJC staff referrals, community partners, and outreach events."},
+ {stage:"Stage 4", name:"Candidate Assessment", stat:"Tools in dev", desc:"Standardized intake, readiness criteria, and interview toolkit being built for consistent, fair selection."},
+ {stage:"Stage 5", name:"Apprenticeships & Employers", stat:"11 <small>targets identified</small>", desc:"Employer & apprenticeship pipeline mapped (incl. LA:RISE, Hospitality Training Academy); 2 colleges in conversation."},
+ {stage:"Stage 6", name:"Employment Outcomes", stat:"Begins post-launch", desc:"Placement, retention & wage outcomes tracked in Salesforce from first cohort onward."}
+],
+
+categories: [
+ {id:"planning", label:"Planning", color:"#1E5A3C"},
+ {id:"recruit",  label:"Recruitment", color:"#93A31C"},
+ {id:"ops",      label:"Operations", color:"#0E9384"},
+ {id:"staff",    label:"Staffing", color:"#4E7A3A"},
+ {id:"data",     label:"Data & Evaluation", color:"#2C6E8F"},
+ {id:"program",  label:"Program Design", color:"#7A5AB8"},
+ {id:"employer", label:"Employers & Partners", color:"#B8722D"},
+ {id:"budget",   label:"Budget & Grant", color:"#A34E68"}
+],
+
+/* Curated from the master project plan — leadership-relevant items only. */
+tasks: [
+ {t:"Build the Youth Pathways South LA project plan (with cascading sub-plans)", cat:"planning", status:"inprogress", owner:"Sharon — Project Lead", note:"With Laurie; leadership review early Aug."},
+ {t:"Stone grant executed — proposal reviewed & signed", cat:"planning", status:"done", owner:"Dr. Ryan", note:"Signed 6/26 · $1.8M · term 7/1/26–6/30/28."},
+ {t:"South LA building secured (Broadway & Manchester)", cat:"ops", status:"done", owner:"Dr. Ryan", note:"Site visit Aug 3."},
+ {t:"Site visit & space plan with Operations", cat:"ops", status:"next", owner:"Sharon + Ginneh", due:"Aug 3", note:"Walk space, plan computer lab & move-in."},
+ {t:"Prepare program space + computer lab (20 laptops)", cat:"ops", status:"next", owner:"Sharon", note:"Build-out plan follows the Aug 3 visit."},
+ {t:"Plan recruitment for January 2027 cohort start", cat:"recruit", status:"backlog", owner:"Sharon", note:""},
+ {t:"Q3 recruitment strategy — recruit 80, retain 40 into Jan 2027", cat:"recruit", status:"next", owner:"Sharon", note:"Leadership goal set July."},
+ {t:"Mobilize SJC case managers & staff for participant referrals", cat:"recruit", status:"next", owner:"Sharon + program team", note:""},
+ {t:"Evaluate internal referral incentive (recognition / gift cards)", cat:"recruit", status:"next", owner:"Sharon", note:"Decision with leadership."},
+ {t:"Introduce program at All-SJC Leadership Lunch", cat:"recruit", status:"next", owner:"Natalie", due:"Jul 28", note:"Org-wide referral kickoff."},
+ {t:"Community outreach & recruitment plan", cat:"recruit", status:"next", owner:"Sharon + Communications", note:""},
+ {t:"South LA Child Fair — outreach & employer mapping", cat:"recruit", status:"next", owner:"Sharon", note:"Date being confirmed."},
+ {t:"Strengthen sourcing & readiness criteria for candidates", cat:"recruit", status:"inprogress", owner:"Sharon", note:"Refreshing pipeline strategy ahead of Sep."},
+ {t:"Hire Program Manager, Youth Workforce Development", cat:"staff", status:"inprogress", owner:"Sharon + P&C", note:"Selection process aligned with leadership."},
+ {t:"Hire Employment Liaison (senior employer relationship-builder)", cat:"staff", status:"next", owner:"Sharon + P&C", note:""},
+ {t:"Finalize job descriptions for all new roles", cat:"staff", status:"next", owner:"Sharon + P&C", note:""},
+ {t:"CRCD introductory meeting — referral partnership + employer network", cat:"employer", status:"next", owner:"Sharon", due:"Jul 20", note:""},
+ {t:"Compton College & LA Trade-Tech partnership conversations", cat:"employer", status:"waiting", owner:"Dr. Ryan", note:"Connecting with college presidents."},
+ {t:"Youth Conference — capture takeaways (incl. New Ways to Work)", cat:"program", status:"next", owner:"Sharon", note:""},
+ {t:"Confirm curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", owner:"Program team", note:""},
+ {t:"Reposition Codetalk as project management & technology skills", cat:"program", status:"next", owner:"Sharon", note:"Messaging update across materials."},
+ {t:"Update intake & application process (standardized data)", cat:"program", status:"backlog", owner:"Program team", note:""},
+ {t:"Participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", owner:"Program team", note:""},
+ {t:"Communicate SNAP-benefit retention to prospective participants", cat:"program", status:"next", owner:"Sharon", note:"Eligible participants may keep benefits while in program."},
+ {t:"Explore UCLA Extension community health worker pathway", cat:"program", status:"backlog", owner:"Joy", note:"Possible future health track."},
+ {t:"Design Salesforce tracking for all grant outcomes", cat:"data", status:"inprogress", owner:"Sharon + Elise — Data", note:"Ready before launch."},
+ {t:"Salesforce build & staff training", cat:"data", status:"waiting", owner:"Elise — Data", note:""},
+ {t:"Data platform decision (Salesforce for Youth Pathways)", cat:"data", status:"inprogress", owner:"Sharon + Data", note:""},
+ {t:"Performance targets: 90 days / 6 months / Year 1", cat:"data", status:"next", owner:"Sharon + Data", note:""},
+ {t:"Confirm governance, decision-making & risk tracking", cat:"planning", status:"next", owner:"Sharon", note:""},
+ {t:"Cross-team meeting cadence (Youth Resource Team + Workforce)", cat:"planning", status:"next", owner:"Sharon", note:""},
+ {t:"Strategic-plan workforce goals review", cat:"planning", status:"next", owner:"Sharon + Laurie", note:""},
+ {t:"Leadership review of project plan", cat:"planning", status:"waiting", owner:"Dr. Ryan", note:"On his return, early Aug."},
+ {t:"Follow-up email to broader group on next steps", cat:"planning", status:"next", owner:"Sharon", note:""},
+ {t:"Schedule leadership progress review (late Jul / early Aug)", cat:"planning", status:"next", owner:"Sharon", note:""},
+ {t:"Program setup in accounting + consultant agreements", cat:"budget", status:"backlog", owner:"Sharon + Finance", note:"MH Clinician & Gang Prevention consultants."},
+ {t:"Grant reporting system (biannual reports + Salesforce capture)", cat:"budget", status:"next", owner:"Sharon", note:"Payment 2 is conditional on approved reports."},
+ {t:"First biannual grant report + funder check-in", cat:"budget", status:"backlog", owner:"Sharon", due:"Jan 1, 2027", note:""}
+],
+
+depts: [
+ {name:"Programs", status:"motion", label:"In motion", tasks:14, desc:"Hiring, curriculum, participant journey & intake design — the core build."},
+ {name:"Operations", status:"motion", label:"In motion", tasks:3, desc:"Site secured; space build-out & safety planning next."},
+ {name:"Data / Evaluation", status:"motion", label:"In motion", tasks:7, desc:"Salesforce architecture & outcome tracking underway."},
+ {name:"Leadership / Governance", status:"motion", label:"In motion", tasks:6, desc:"Governance, decision rights & launch-date confirmation."},
+ {name:"People & Culture", status:"starting", label:"Starting", tasks:6, desc:"Job descriptions & postings for the new roles."},
+ {name:"Communications", status:"starting", label:"Starting", tasks:3, desc:"Outreach, employer engagement & stakeholder plans."},
+ {name:"Finance / Contracts", status:"queued", label:"Queued", tasks:5, desc:"Budget codes, consultant agreements, space contracts."},
+ {name:"Compliance", status:"queued", label:"Queued", tasks:3, desc:"Policies, consent forms & funder reporting schedule."},
+ {name:"Project Management", status:"motion", label:"In motion", tasks:5, desc:"Launch plan, risk log & cross-team cadence."}
+],
+
+feed: [
+ {date:"Jul 16", text:"<b>South LA building secured</b> at Broadway & Manchester — site visit set for Aug 3 (Sharon + Ginneh).", tag:"Milestone"},
+ {date:"Jul 16", text:"<b>CRCD introductory meeting scheduled</b> for Jul 20 — referral partnership and employer-network exploration.", tag:"Partnership"},
+ {date:"Jul 16", text:"<b>Partner & resource directory stood up</b> — 58 South LA / LA County youth orgs, employers, and public programs mapped for referrals and outreach.", tag:"Tool"},
+ {date:"Jul 9", text:"<b>Leadership debrief with Dr. Ryan</b> — confirmed priorities: full project plan, PM hire, and Q3 recruitment goal (80 recruited → 40 retained into Jan).", tag:"Meeting"},
+ {date:"Jul 1", text:"<b>First grant payment received</b> — $900K (Payment 1 of 2).", tag:"Milestone"},
+ {date:"Jun 26", text:"<b>Grant agreement executed</b> — Young Adults Forward Fund, $1.8M over two years, serving 150 young adults.", tag:"Milestone"}
+],
+
+links: [
+ {label:"Program Design Visual", file:"YP Program Design Visual.html", tag:"LIVE", color:"#1E5A3C"},
+ {label:"The Youth Book — Partner & Resource Directory (staff edition)", file:"YP Youth Book (Staff).html", tag:"LIVE", color:"#93A31C"}
+],
+reqNote: "Available on request from the project lead: signed grant agreement & objectives · full budget · program design & participant journeys (working doc) · department task plan · interview & assessment toolkit (in development)."
+};
+
+/* ================= render ================= */
+const $=id=>document.getElementById(id);
+$("updated-line").textContent = "Updated " + DATA.updated;
+$("footer-updated").textContent = "Updated " + DATA.updated + " · Maintained by Sharon Plunkett, Project Lead";
+$("banner-text").textContent = DATA.banner;
+
+/* countdown */
+(function(){
+  const launch = new Date(2026,10,4); const now = new Date();
+  const days = Math.max(0, Math.ceil((launch - new Date(now.getFullYear(),now.getMonth(),now.getDate()))/86400000));
+  $("days-out").textContent = days;
+})();
+
+/* phases */
+DATA.phases.forEach(p=>{
+  const d=document.createElement("div");
+  d.className="phase"+(p.current?" current":"")+(p.launch?" launch":"");
+  d.innerHTML=`<span class="ph-tag">${p.tag}</span><h3>${p.name}</h3>
+  <span class="ph-when">${p.when}</span><p class="ph-desc">${p.desc}</p>
+  <div class="ph-bar"><div class="ph-fill" style="width:${p.pct}%"></div></div>`;
+  $("phases").appendChild(d);
+});
+
+/* milestones */
+DATA.milestones.forEach(m=>{
+  const r=document.createElement("div"); r.className="mrow m-"+m.state;
+  r.innerHTML=`<span class="mdate">${m.date}</span><span class="mdot"></span>
+  <span class="mtext">${m.text}</span>${m.state==="done"?'<span class="mcheck">DONE ✓</span>':""}`;
+  $("milestones").appendChild(r);
+});
+
+/* priorities */
+DATA.priorities.forEach(p=>{
+  const d=document.createElement("div"); d.className="prio-card";
+  d.innerHTML=`<div class="pc-title">${p.title}</div><div class="pc-meta">${p.meta}</div>
+  ${p.due?`<div class="pc-due">${p.due}</div>`:""}`;
+  $("priorities").appendChild(d);
+});
+
+/* outcomes */
+DATA.outcomes.forEach(o=>{
+  const pct=o.target?Math.min(100,Math.round(100*o.actual/o.target)):0;
+  const d=document.createElement("div"); d.className="outcome-card";
+  d.innerHTML=`<div class="oc-label">${o.label}</div>
+  <div class="oc-nums"><span class="oc-actual">${o.actual}${o.unit||""}</span>
+  <span class="oc-target">/ ${o.target}${o.unit||""} target</span></div>
+  <div class="oc-bar"><div class="oc-fill" style="width:${pct}%"></div></div>
+  <div class="oc-note">${o.note}</div>`;
+  $("outcomes").appendChild(d);
+});
+
+/* tracker */
+DATA.tracker.forEach(t=>{
+  const d=document.createElement("div"); d.className="track-card";
+  d.innerHTML=`<span class="tc-stage">${t.stage}</span><h3>${t.name}</h3>
+  <div class="tc-stat">${t.stat}</div><p>${t.desc}</p>`;
+  $("tracker").appendChild(d);
+});
+
+/* board */
+const catById={}; DATA.categories.forEach(c=>catById[c.id]=c);
+const COLS=[["backlog","Backlog"],["next","Up Next"],["inprogress","In Progress"],["waiting","Waiting On"],["done","Done"]];
+COLS.forEach(([key,label])=>{
+  const col=document.createElement("div"); col.className="kcol";
+  const items=DATA.tasks.filter(t=>t.status===key);
+  col.innerHTML=`<h3>${label}<span class="kcount">${items.length}</span></h3>`;
+  items.forEach(t=>{
+    const c=catById[t.cat]||{label:t.cat,color:"#888"};
+    const d=document.createElement("div"); d.className="task-card";
+    d.innerHTML=`<div class="tt">${t.t}${t.due?`<span class="tdue">${t.due}</span>`:""}</div>
+    ${t.note?`<div class="tm">${t.note}</div>`:""}
+    <span class="towner">${t.owner}</span>
+    <span class="tcat" style="background:${c.color}18;color:${c.color}">${c.label}</span>`;
+    col.appendChild(d);
+  });
+  $("kanban").appendChild(col);
+});
+
+/* weight */
+(function(){
+  const open=DATA.tasks.filter(t=>t.status!=="done");
+  const counts={}; open.forEach(t=>counts[t.cat]=(counts[t.cat]||0)+1);
+  const max=Math.max(...Object.values(counts));
+  DATA.categories.filter(c=>counts[c.id]).sort((a,b)=>counts[b.id]-counts[a.id]).forEach(c=>{
+    const r=document.createElement("div"); r.className="wrow";
+    r.innerHTML=`<span class="wlabel">${c.label}</span>
+    <div class="wbar"><div class="wfill" style="width:${100*counts[c.id]/max}%;background:${c.color}"></div></div>
+    <span class="wnum">${counts[c.id]}</span>`;
+    $("weight").appendChild(r);
+  });
+})();
+
+/* departments */
+DATA.depts.forEach(d=>{
+  const el=document.createElement("div"); el.className="dept-card";
+  el.innerHTML=`<h3>${d.name}</h3><span class="dept-status ds-${d.status}">${d.label}</span>
+  <p>${d.desc}</p><span class="dcount">${d.tasks} launch tasks in plan</span>`;
+  $("depts").appendChild(el);
+});
+
+/* feed */
+DATA.feed.forEach(f=>{
+  const r=document.createElement("div"); r.className="frow";
+  r.innerHTML=`<span class="fdate">${f.date}</span><span class="ftext">${f.text}<span class="ftag">${f.tag}</span></span>`;
+  $("feed").appendChild(r);
+});
+
+/* links */
+DATA.links.forEach(l=>{
+  const a=document.createElement("a"); a.className="link-card"; a.href=l.file;
+  a.innerHTML=`<span class="lk-icon" style="background:${l.color}">${l.tag}</span>
+  <span><span class="lk-label">${l.label}</span><span class="lk-file">${l.file}</span></span>`;
+  $("links-grid").appendChild(a);
+});
+$("req-note").textContent = DATA.reqNote;
+</script>
+</body>
+</html>

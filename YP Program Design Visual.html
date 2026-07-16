@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Pathways South LA — Program Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF; --panel:#F7F7FB; --panel2:#F1F0FB;
+    --ink:#181826; --sub:#5A5A6E; --line:#E6E4F3;
+    --violet:#5B4BE0; --violet-d:#3A2CB0; --violet-t:#EEEBFC;
+    --lime:#C6F24E; --lime-d:#8FB61E;
+    --coral:#FF6B57; --teal:#0E9384; --amber:#F5A524;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+    radial-gradient(1000px 340px at 0% -40px,#F3F1FE 0%,rgba(255,255,255,0) 60%),var(--bg);
+    color:var(--ink);font-family:"Manrope",-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1140px;margin:0 auto;padding:40px 38px 60px;}
+  h1,h2,h3,.dsp{font-family:"Sora",sans-serif;letter-spacing:-.02em;}
+  .mono{font-family:"Space Mono",monospace;}
+
+  .top{display:flex;align-items:center;gap:13px;}
+  .glyph{width:42px;height:42px;border-radius:12px;background:var(--violet);position:relative;flex:0 0 auto;box-shadow:0 6px 16px rgba(91,75,224,.3);}
+  .glyph::before{content:"";position:absolute;inset:11px;border-radius:6px;border:2.5px solid var(--lime);}
+  .glyph::after{content:"";position:absolute;right:9px;bottom:9px;width:7px;height:7px;border-radius:50%;background:var(--lime);}
+  .top .n{font-family:"Space Mono";font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);}
+  h1{font-size:44px;line-height:1;font-weight:800;margin:20px 0 6px;}
+  h1 .em{color:var(--violet);}
+  .sub{font-size:18px;color:var(--sub);font-weight:500;max-width:660px;}
+  .metabar{margin-top:12px;font-family:"Space Mono";font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--sub);}
+  .metabar b{color:var(--ink);}.metabar .sep{color:var(--line);margin:0 8px;}
+
+  section{margin-top:42px;}
+  .sh{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .sh .idx{font-family:"Space Mono";font-size:12px;color:#fff;background:var(--violet);border-radius:8px;padding:3px 8px;font-weight:700;}
+  .sh h2{font-size:23px;font-weight:700;margin:0;}
+  .sh .hint{margin-left:auto;font-size:12.5px;color:var(--sub);}
+
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 15px 14px;position:relative;}
+  .step::after{content:"";position:absolute;left:15px;right:15px;top:0;height:4px;border-radius:0 0 4px 4px;background:var(--violet);}
+  .step.o::after{background:var(--coral);}.step.i::after{background:var(--lime-d);}
+  .step .lab{font-family:"Space Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);font-weight:700;margin:6px 0 8px;}
+  .step.o .lab{color:var(--coral);}.step.i .lab{color:var(--lime-d);}
+  .step ul{margin:0;padding-left:15px;font-size:12px;color:var(--ink);}
+  .step li{margin-bottom:4px;}
+  .principles{margin-top:14px;background:var(--panel);border-radius:12px;padding:13px 16px;font-size:12.5px;color:var(--sub);border-left:3px solid var(--lime-d);}
+  .principles b{color:var(--ink);}
+
+  .ribbon{display:flex;flex-wrap:wrap;gap:12px;}
+  .b{flex:1 1 0;min-width:170px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 16px;position:relative;}
+  .b .num{font-family:"Space Mono";font-size:11px;color:var(--violet);font-weight:700;}
+  .b.entry{background:var(--violet);border-color:var(--violet);}
+  .b.entry .num{color:var(--lime);}
+  .b .t{font-family:"Sora";font-weight:700;color:var(--ink);font-size:15px;margin:3px 0 3px;}
+  .b.entry .t{color:#fff;} .b .d{font-size:12px;color:var(--sub);} .b.entry .d{color:#DED9FB;}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .track{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#fff;position:relative;overflow:hidden;}
+  .track::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;}
+  .track.fortifi::before{background:var(--teal);}
+  .track.code::before{background:var(--coral);}
+  .track .tag{font-family:"Space Mono";font-size:10px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;}
+  .track.fortifi .tag{color:var(--teal);}.track.code .tag{color:var(--coral);}
+  .track h3{margin:2px 0 0;font-size:19px;color:var(--ink);font-weight:700;}
+  .track p{margin:9px 0 0;font-size:13px;color:var(--ink);}
+  .track .cred{margin-top:11px;font-size:12px;color:var(--sub);}
+  .track .cred b{color:var(--violet-d);font-weight:700;}
+
+  .lgd{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--sub);margin-bottom:16px;}
+  .lgd span{display:inline-flex;align-items:center;gap:6px;}
+  .lgd i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+  .journeys{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .jcol{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 20px 8px;}
+  .jhead{display:flex;align-items:center;gap:10px;margin-bottom:3px;}
+  .jhead h3{margin:0;font-size:20px;font-weight:800;}
+  .jhead .badge{font-family:"Space Mono";font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;padding:3px 10px;border-radius:100px;}
+  .code .badge{color:var(--coral);background:#FFE7E2;}
+  .fortifi .badge{color:var(--teal);background:#DBF1EE;}
+  .who{font-size:12.5px;color:var(--sub);margin-bottom:14px;}
+  .stage{position:relative;padding:0 0 15px 24px;border-left:2px solid var(--line);margin-left:5px;}
+  .stage:last-child{border-left-color:transparent;padding-bottom:6px;}
+  .stage::before{content:"";position:absolute;left:-8px;top:1px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--violet);}
+  .code .stage::before{border-color:var(--coral);}
+  .fortifi .stage::before{border-color:var(--teal);}
+  .s-name{font-family:"Sora";font-weight:700;color:var(--ink);font-size:13.5px;}
+  .s-body{font-size:12.5px;color:var(--sub);margin-top:2px;}
+  .chips{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px;}
+  .chip{font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;letter-spacing:.01em;}
+  .chip.m{background:var(--violet-t);color:var(--violet-d);}
+  .chip.k{background:#FFE7E2;color:#D2452F;}
+  .chip.c{background:#DBF1EE;color:var(--teal);}
+  .chip.t{background:#F1F7DA;color:#6C8317;}
+
+  .note{margin-top:26px;background:var(--ink);color:#fff;border-radius:16px;padding:16px 20px;font-size:12.5px;line-height:1.5;position:relative;overflow:hidden;}
+  .note::before{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(198,242,78,.22),transparent 70%);}
+  .note b{color:var(--lime);}
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:"Space Mono";font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);}
+
+  @media (max-width:860px){
+    .flow{grid-template-columns:1fr 1fr;}
+    .journeys,.split{grid-template-columns:1fr;}
+    h1{font-size:36px;}
+  }
+  @media print{
+    body{background:#fff;} .wrap{max-width:none;padding:0;}
+    section,.jcol,.step{page-break-inside:avoid;}
+    .note{background:#fff;color:var(--ink);border:1px solid var(--line);} .note b{color:var(--violet);}
+    .journeys{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="glyph"></div>
+    <div class="n">St. Joseph Center · Stone Foundation</div>
+  </div>
+  <h1>Program <span class="em">Design</span> &amp; Journeys</h1>
+  <div class="sub">One universal front door, two tech tracks, and a clear route from first contact to a career — for young people ages 16–30 in South LA.</div>
+  <div class="metabar"><b>150</b> youth / 2 yrs<span class="sep">/</span>Universal entry &rarr; Codetalk / Fortifi<span class="sep">/</span>Grounded in the <b>WIOA</b> youth framework</div>
+
+  <section>
+    <div class="sh"><span class="idx">01</span><h2>The Logic Model</h2><span class="hint">what goes in → what changes</span></div>
+    <div class="flow">
+      <div class="step"><div class="lab">Inputs</div><ul><li>$1.8M / 2 yrs (Stone grant)</li><li>8.0 FTE + 2 consultants</li><li>YRT-SLA intake</li><li>Codetalk &amp; Fortifi curricula</li><li>Employer partners</li><li>Salesforce; space &amp; lab</li></ul></div>
+      <div class="step"><div class="lab">Activities</div><ul><li>Outreach &amp; intake</li><li>Case mgmt (1:40)</li><li>Wraparound &amp; wellness</li><li>Foundational readiness</li><li>Codetalk / Fortifi</li><li>Paid work experience</li></ul></div>
+      <div class="step"><div class="lab">Outputs</div><ul><li>150 enrolled (70 + 80)</li><li>100% assessed &amp; matched</li><li>80 in advanced tracks</li><li>Credentials completed</li><li>Work &amp; job placements</li></ul></div>
+      <div class="step o"><div class="lab">Outcomes</div><ul><li>Increased stability</li><li>Skills &amp; life-skill gains</li><li>80% graduate program</li><li>Credential earned</li><li>Placement within 90 days</li></ul></div>
+      <div class="step i"><div class="lab">Impact</div><ul><li>80% family-sustaining wages</li><li>90% avoid reoffending</li><li>90% progress toward economic mobility</li></ul></div>
+    </div>
+    <div class="principles"><b>Also part of the design:</b> guiding principles (trauma-informed, youth-centered, concurrent delivery, early attachment to earning), assumptions, external factors, and evaluation against 90-day / 6-month / Year-1 targets.</div>
+  </section>
+
+  <section>
+    <div class="sh"><span class="idx">02</span><h2>Program Structure</h2><span class="hint">one front door, two tracks</span></div>
+    <div class="ribbon">
+      <div class="b entry"><div class="num">01</div><div class="t">Universal Entry</div><div class="d">YRT-SLA intake &amp; comprehensive assessment for every youth</div></div>
+      <div class="b"><div class="num">02</div><div class="t">Wraparound</div><div class="d">Case management, housing, benefits, wellness, stipends — continuous</div></div>
+      <div class="b"><div class="num">03</div><div class="t">Foundational Readiness</div><div class="d">Communication, financial &amp; digital literacy, career exploration → track match</div></div>
+      <div class="b"><div class="num">04</div><div class="t">Placement</div><div class="d">Employment or postsecondary + retention follow-up</div></div>
+    </div>
+    <div class="split">
+      <div class="track fortifi"><div class="tag">Foundational tech</div><h3>Fortifi</h3>
+        <p>IT support, web technology, digital media &amp; project-management basics with strong professional development. Fast on-ramp; heavy wraparound; serves many justice-impacted youth.</p>
+        <div class="cred"><b>Recommended credentials:</b> Google IT Support · CompTIA A+ (stretch) · freeCodeCamp Web Design</div></div>
+      <div class="track code"><div class="tag">Advanced tech</div><h3>Codetalk</h3>
+        <p>Immersive, project-based training in UX design, agile project management, and technology-enabled problem-solving. Builds a portfolio for a tech career, not just a first job.</p>
+        <div class="cred"><b>Recommended credentials:</b> Google UX Design · Google/PMI Project Management (CAPM) · Agile/Scrum</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><span class="idx">03</span><h2>Two Participant Journeys</h2><span class="hint">same pathway, matched to the person</span></div>
+    <div class="lgd">
+      <span><i class="chip m" style="width:12px;height:12px"></i> Milestone</span>
+      <span><i class="chip k"></i> Checkpoint</span>
+      <span><i class="chip c"></i> Certification</span>
+      <span><i class="chip t"></i> Touchstone</span>
+    </div>
+    <div class="journeys">
+
+      <div class="jcol fortifi">
+        <div class="jhead"><h3>Jasmine, 20</h3><span class="badge">Fortifi</span></div>
+        <div class="who">Recently justice-involved; interrupted education &amp; economic hardship. Needs stabilization, confidence, and a fast foundational on-ramp with a paycheck along the way.</div>
+        <div class="stage"><div class="s-name">Outreach &amp; Recruitment</div><div class="s-body">Connected via a reentry partner; patient, assertive follow-up.</div><div class="chips"><span class="chip m">Makes contact</span><span class="chip t">Warm first talk</span></div></div>
+        <div class="stage"><div class="s-name">Intake &amp; Assessment</div><div class="s-body">Needs, barriers &amp; justice-involved data captured; case manager assigned.</div><div class="chips"><span class="chip k">Assessment + match</span><span class="chip t">Meets case manager</span></div></div>
+        <div class="stage"><div class="s-name">Stabilization</div><div class="s-body">Benefits (CalFresh/Medi-Cal), transport, food/rent support, wellness, court advocacy.</div><div class="chips"><span class="chip m">Needs stabilized</span><span class="chip t">First stipend</span></div></div>
+        <div class="stage"><div class="s-name">Foundational Readiness</div><div class="s-body">3-week bootcamp: communication, financial &amp; digital literacy, workplace readiness.</div><div class="chips"><span class="chip c">Readiness cert.</span><span class="chip k">Readiness benchmark</span></div></div>
+        <div class="stage"><div class="s-name">Fortifi Training</div><div class="s-body">8 weeks: IT support, web tech, digital media, PM basics + cohort support.</div><div class="chips"><span class="chip c">Google IT / CompTIA A+</span><span class="chip k">Competency check</span></div></div>
+        <div class="stage"><div class="s-name">Work Experience</div><div class="s-body">Paid work matched to her level; supportive employer &amp; mentor.</div><div class="chips"><span class="chip m">First paycheck</span><span class="chip t">On-site mentor</span></div></div>
+        <div class="stage"><div class="s-name">Completion &amp; Placement</div><div class="s-body">Graduates with a credential; placed in an entry-level IT support / help-desk / digital role, or bridges to further training.</div><div class="chips"><span class="chip m">Graduation &amp; hired</span><span class="chip k">90-day confirm</span></div></div>
+        <div class="stage"><div class="s-name">Retention &amp; Recidivism</div><div class="s-body">6- &amp; 12-month check-ins support employment and staying justice-free.</div><div class="chips"><span class="chip m">Retained · no reoffense</span><span class="chip t">Ongoing coaching</span></div></div>
+      </div>
+
+      <div class="jcol code">
+        <div class="jhead"><h3>Andre, 24</h3><span class="badge">Codetalk</span></div>
+        <div class="who">Diploma + some college; housing unstable but not in crisis. Self-taught, design-minded, motivated to build a career and a portfolio — not just get a job.</div>
+        <div class="stage"><div class="s-name">Outreach &amp; Recruitment</div><div class="s-body">Referred by a community partner; YRT-SLA books an intake.</div><div class="chips"><span class="chip m">Makes contact</span></div></div>
+        <div class="stage"><div class="s-name">Intake &amp; Assessment</div><div class="s-body">Assessed as stable &amp; tech-ready; matched toward the advanced track.</div><div class="chips"><span class="chip k">Assessment + match</span><span class="chip t">Meets case manager</span></div></div>
+        <div class="stage"><div class="s-name">Stabilization</div><div class="s-body">Light-touch wraparound: transport stipend, benefits check, housing navigation.</div><div class="chips"><span class="chip m">Stabilized</span><span class="chip t">First stipend</span></div></div>
+        <div class="stage"><div class="s-name">Foundational Readiness</div><div class="s-body">3-week readiness; confirms interest in UX/design &amp; project management.</div><div class="chips"><span class="chip c">Readiness cert.</span><span class="chip k">Track selection</span></div></div>
+        <div class="stage"><div class="s-name">Codetalk Training</div><div class="s-body">Project-based UX design, agile PM &amp; tech problem-solving; builds a Figma portfolio.</div><div class="chips"><span class="chip c">Google UX / PM (CAPM)</span><span class="chip k">Mid-program review</span></div></div>
+        <div class="stage"><div class="s-name">Work Experience</div><div class="s-body">Paid internship on a real product team with an on-site mentor.</div><div class="chips"><span class="chip m">First paycheck</span><span class="chip t">Employer mentor</span></div></div>
+        <div class="stage"><div class="s-name">Completion &amp; Placement</div><div class="s-body">Graduates with stacked credentials + portfolio; placed in an entry-level UX/PM or tech-adjacent role, or advances to further training.</div><div class="chips"><span class="chip m">Graduation &amp; hired</span><span class="chip k">90-day confirm</span></div></div>
+        <div class="stage"><div class="s-name">Retention &amp; Advancement</div><div class="s-body">Coach checks in at 6 &amp; 12 months; raises and the next stackable credential.</div><div class="chips"><span class="chip m">Retained 6/12 mo</span><span class="chip t">Advancement talk</span></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="note"><b>Note.</b> Credentials shown are recommended, currently in-demand targets — confirm against SJC's existing Codetalk and Fortifi curricula and awarding-body agreements. Personas are composites for planning.</div>
+
+  <footer>
+    <span>St. Joseph Center — Youth Pathways South LA</span>
+    <span>Program design as of July 4, 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
