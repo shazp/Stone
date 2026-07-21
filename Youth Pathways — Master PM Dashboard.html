@@ -215,6 +215,8 @@
     transition:border-color .15s ease, box-shadow .15s ease;
   }
   a.link-card:hover{border-color:var(--violet); box-shadow:0 5px 16px rgba(91,75,224,.12);}
+  .link-card.link-soon{opacity:.6; cursor:default;}
+  .link-card.link-soon:hover{border-color:var(--line); box-shadow:none;}
   .lk-icon{
     width:36px; height:36px; border-radius:10px; flex:0 0 auto;
     display:flex; align-items:center; justify-content:center;
@@ -339,7 +341,7 @@
       <div class="oc-note" style="margin-top:6px;">
         Interviews run 10–15 min each.<br>
         <b>Location:</b> Constitution Park, near LAX — Washington St. between Sycamore St. &amp; Maple Ave., El Segundo, CA 90245 (800 Washington Street, El Segundo).<br>
-        Candidates selected through the EOP enter a union apprenticeship-readiness bootcamp and, on graduation, are sponsored into the union — this round with the <b>Carpenters</b> — typically landing on Hensel Phelps LAX-area projects.
+        Candidates selected through the EOP enter a union apprenticeship-readiness bootcamp and, on graduation, are sponsored into the union — this round with the <b>Laborers Union</b> (corrected 7/21 — previously recorded as Carpenters) — typically landing on Hensel Phelps LAX-area projects. One candidate identified; prep underway (see task #53).
       </div>
     </div>
     <div class="outcome-card">
@@ -358,7 +360,7 @@
       <div class="oc-label" style="min-height:0;">Hensel Phelps &amp; the Carpenters Union</div>
       <div class="oc-note" style="margin-top:6px;">
         <b>Hensel Phelps</b> is one of the largest employee-owned general contractors in the U.S., with major LAX modernization work. Its EOP (run by Michelle Keyser) recruits candidates from nonprofit partners — the first cohort (with PATH) went bootcamp → union sponsorship → LAX project, incl. employer support for housing.<br><br>
-        <b>Carpenters apprenticeship</b> (Southwest/Western States Regional Council): ~4-year earn-while-you-learn — paid wages + health &amp; pension from day one, ~640 hrs instruction + ~5,200 hrs on-the-job; journey-level scale is roughly $49/hr. A direct living-wage pathway for our 18–30 population — exactly the placement profile the grant targets.
+        <b>Laborers Union apprenticeship</b>: this cohort sponsors into the Laborers Union (corrected 7/21 from an earlier note that said Carpenters). Exact program length, wage scale, and instruction/OJT hours for this Laborers pathway still need confirming — don't quote the old Carpenters figures (~4-yr, ~$49/hr) for this cohort. Still a direct living-wage pathway for our 18–30 population — exactly the placement profile the grant targets.
       </div>
     </div>
   </div>
@@ -416,7 +418,7 @@
    }]
    ===================================================================== */
 const DATA = {
- updated: "July 16, 2026",
+ updated: "July 21, 2026",
  phase: "Grant Active · Pre-Launch Build",
  categories: [
   {id:"planning", label:"Project Planning & Launch", color:"#5B4BE0"},
@@ -439,8 +441,8 @@ const DATA = {
  ],
  outcomes: [
   {label:"Youth enrolled (entry)", actual:0, target:150, unit:"", note:"70 in Yr1 + 80 in Yr2 (unduplicated)", verify:false},
-  {label:"Into workforce tracks (Codetalk/Fortifi)", actual:0, target:80, unit:"", note:"40 per year", verify:false},
-  {label:"Graduates (Codetalk/Fortifi)", actual:0, target:64, unit:"", note:"80% of enrolled", verify:false},
+  {label:"Into workforce tracks (Advance Tech Training Class/Foundations)", actual:0, target:80, unit:"", note:"40 per year", verify:false},
+  {label:"Graduates (Advance Tech Training Class/Foundations)", actual:0, target:64, unit:"", note:"80% of enrolled", verify:false},
   {label:"Living-wage / career placement", actual:0, target:50, unit:"", note:"~80% of grads; also tracked as 75% within 12 mo", verify:false},
   {label:"Justice-involved avoid reoffending (12 mo)", actual:0, target:90, unit:"%", note:"90% target", verify:false},
   {label:"Progress toward economic mobility", actual:0, target:135, unit:"", note:"90% of all youth (150)", verify:false}
@@ -456,22 +458,22 @@ const DATA = {
   {id:9, title:"Determine case manager backfill if Morgan is promoted to PM", cat:"staff", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:10, title:"Clarify Natalie's bandwidth across Santa Monica & South LA", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Does the Stone-funded PM straddle both sites?"},
   {id:11, title:"Hire an Employment Liaison (senior external relationship-builder)", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"No internal candidate identified yet."},
-  {id:12, title:"Design Salesforce tracking for all Stone outcomes (with Elise)", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Elise", requestedBy:"", due:null, note:"Enrollment, placement, retention, SUD referrals — before launch."},
+  {id:12, title:"Design Salesforce tracking for all Stone outcomes (with Elise)", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Elise", requestedBy:"", due:null, note:"Enrollment, placement, retention, SUD referrals — before launch. Met with Elise to craft outcomes & performance-tracking framework; follow-up session in scheduling."},
   {id:13, title:"Rethink participant recruitment sourcing & readiness criteria", cat:"recruit", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Applications dropped ~80 → ~22 for 12 seats; full rethink needed."},
-  {id:14, title:"Reposition Code Talk as 'project management & technology skills'", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Not 'pathway to tech' — update materials."},
+  {id:14, title:"Rename Code Talk to 'Advance Tech Training Class' across materials", cat:"program", status:"done", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Not 'pathway to tech' — positioned as project management & technology skills. Renamed 7/21 across dashboards, Youth Book, and program design docs."},
   {id:15, title:"Coordinate partnership talks with Compton College & LA Trade Tech", cat:"employer", status:"backlog", priority:"high", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"Dr. Ryan connecting with college presidents."},
   {id:16, title:"Elise: build Salesforce structure & train program staff pre-launch", cat:"data", status:"waiting", priority:"high", owner:"Elise", waitingOn:"Elise", requestedBy:"", due:null, note:""},
   {id:17, title:"Morgan: interviewing for Program Manager role", cat:"staff", status:"waiting", priority:"high", owner:"Morgan", waitingOn:"Morgan", requestedBy:"", due:null, note:"Ongoing."},
   {id:18, title:"Strategic-plan workforce goals review with Laurie", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:""},
   {id:19, title:"Frame South LA expansion carefully with Santa Monica leadership", cat:"planning", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"Positioned as a success built on the SM model."},
-  {id:20, title:"Explore UCLA Extension community health worker training", cat:"program", status:"backlog", priority:"low", owner:"Joy", waitingOn:"Joy", requestedBy:"", due:null, note:"Possible new health pathway; Joy researching."},
+  {id:20, title:"Evaluate UCLA Extension community health worker training as a participant pathway", cat:"program", status:"inprogress", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-22", note:"Reassigned from Joy to Sharon. Attending the UCLA CHW Student Info Session Wed 7/22, then applying to take the course herself to evaluate the material firsthand before considering it as a pathway."},
   {id:21, title:"Confirm governance, decision-maker & progress/risk tracking", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Kickoff decision."},
   {id:22, title:"Finalize job descriptions for the new roles", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:23, title:"Update intake/application process for standardized data", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Include justice-involved fields."},
   {id:24, title:"Set up participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:25, title:"Prepare program space + computer lab (20 laptops)", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Space SECURED at Broadway & Manchester ✓. After 8/3 site visit, plan build-out: computer lab, furniture, safety, move-in."},
   {id:26, title:"Develop community outreach & recruitment plan", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
-  {id:27, title:"Confirm/develop curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:27, title:"Confirm/develop curriculum: Foundational Readiness, Advance Tech Training Class, Foundations", cat:"program", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:28, title:"Decide data platform: keep SM YRT in Clarity; Youth Pathways → Salesforce", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"One system or two?"},
   {id:29, title:"Define performance targets for 90 days / 6 months / Year 1", cat:"data", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:30, title:"Establish cross-team meeting cadence (YRT + Workforce)", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
@@ -494,12 +496,14 @@ const DATA = {
   {id:46, title:"Evaluate an internal referral incentive (gift cards / recognition)", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS question: modest incentive to encourage staff referrals — decide if/how."},
   {id:47, title:"Introduce program at July 28 All-SJC Leadership Lunch (Natalie to present — Sharon OOO)", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"Natalie", requestedBy:"Dr. Ryan", due:"2026-07-28", note:"RJS: use the All-SJC Leadership Lunch to start generating org-wide referrals; brief Natalie to deliver since you're OOO."},
   {id:48, title:"Communicate SNAP-retention eligibility to prospective participants", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS: more intentionally message that eligible participants may keep SNAP benefits while in the program, if applicable."},
-  {id:49, title:"Intro meeting with CRCD (referral partnership + employer network)", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-20", note:"Meeting set for Mon 7/20. CRCD = model South LA youth workforce org (VCN YouthSource, CRCD Enterprises, LA:RISE). Explore referral MOU + learn their employer/apprenticeship pipeline. See the Youth Book."},
+  {id:49, title:"Intro meeting with CRCD (referral partnership + employer network)", cat:"employer", status:"done", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-20", note:"Held Mon 7/20 with Jose Guadron (with Elise) — established connection, shared connections, discussed collaboration. Follow-up with Jose is task #55."},
   {id:50, title:"Weekly: review & update SLA Works leadership dashboard (Mondays)", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"RECURRING. Each Monday with Claude: review new North Star tasks (include/exclude for leadership view one-by-one), add meetings/wins/decisions to the Activity log, refresh milestones & priorities, push live. Auto-publish runs Mon 7am — review before or after. Curation record: .deploy/sla_works_manifest.json."},
-  {id:51, title:"Prep & send candidates to Hensel Phelps EOP apprenticeship interviews", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-08-24", note:"Mon 8/24, Constitution Park, El Segundo (near LAX) — 10–15 min interviews for the Carpenters bootcamp cohort. Identify candidates, prep them (interview basics, work boots/ID needs), confirm logistics with Michelle Keyser. See Apprenticeships section below."},
-  {id:52, title:"Meet with Merge Opportunities (Erin Earlywine) — referrals & collaboration", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Meeting week of 7/21. Merge = workforce-dev nonprofit for foster/TAY & reentry youth 18–28 across LA/OC/SD (Erin Earlywine, ED · erin@mergenow.org · mergenow.org). Explore two-way referrals + collaboration; strong population & geography overlap. In the Youth Book (Referral Partners)."},
-  {id:53, title:"PERSONAL — Hensel Phelps candidate prep (prep sheet · in-person · sandbags)", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"MY EYES ONLY — not on SLA Works. Ahead of the 8/24 EOP interviews: (1) create a candidate prep sheet explaining the apprenticeship opportunity; (2) set an in-person meeting with the candidate; (3) follow up with Michelle Keyser about the sandbags."},
-  {id:54, title:"Reach out to Jeffery Wallace (LeadersUp) — schedule intro meeting", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Next week. Jeffery Wallace = President & CEO of LeadersUp, a nonprofit workforce intermediary connecting opportunity youth to employers (NOT a county dept). Explore employer-pipeline connection + collaboration. In the Youth Book (Thought Partners)."}
+  {id:51, title:"Prep & send candidates to Hensel Phelps EOP apprenticeship interviews", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-08-24", note:"Mon 8/24, Constitution Park, El Segundo (near LAX) — 10–15 min interviews for the Laborers Union bootcamp cohort (corrected from Carpenters). One candidate identified; prep in progress. Confirm logistics with Michelle Keyser. See Apprenticeships section below."},
+  {id:52, title:"Meet with Merge Opportunities (Erin Earlywine) — referrals & collaboration", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-22", note:"Confirmed: Wed 7/22, 2:30 PM — 30-min call. Merge = workforce-dev nonprofit for foster/TAY & reentry youth 18–28 across LA/OC/SD (Erin Earlywine, ED · 949-799-6333 · erin@mergenow.org · mergenow.org). Explore two-way referrals + collaboration; strong population & geography overlap. In the Youth Book (Referral Partners)."},
+  {id:53, title:"PERSONAL — Hensel Phelps candidate prep (prep sheet · in-person · sandbags)", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"MY EYES ONLY — not on SLA Works. Union corrected to Laborers. Candidate identified; ahead of the 8/24 EOP interviews: (1) create a candidate prep sheet explaining the apprenticeship opportunity; (2) set an in-person meeting with the candidate; (3) follow up with Michelle Keyser about the sandbags; (4) schedule prep session with Tonia."},
+  {id:54, title:"Reach out to Jeffery Wallace (LeadersUp) — schedule intro meeting", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Next week. Jeffery Wallace = President & CEO of LeadersUp, a nonprofit workforce intermediary connecting opportunity youth to employers (NOT a county dept). Explore employer-pipeline connection + collaboration. In the Youth Book (Thought Partners)."},
+ {id:55, title:"Follow up with Jose Guadron (CRCD) on collaboration next steps", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"After the 7/20 intro meeting (with Elise) — continue sharing connections and firm up what collaboration looks like."},
+ {id:56, title:"Meeting with Joshua Segura (Sanitize Uplift / Sanitize Pro)", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-23", note:"Thu 7/23. Founder — workforce development & public space stabilization; hires from encampments, deploys daily cleaning crews, reduces encampment potential. Explore referral/employer partnership given overlap with justice-involved & housing-insecure participants. Added to the Youth Book."}
  ]
 };
 
@@ -754,22 +758,22 @@ const DATA = {
     {label:"Budget (Proposal xlsx)", file:"Updated Stone Youth Pathways Proposal.xlsx", tag:"XLSX", color:"#0E9384"},
     {label:"Project Narrative", file:"St. Jospeh Center_Stone Foundation_Youth Pathways Proposal_042126-1.pdf", tag:"PDF", color:"#FF6B57"},
     {label:"Task List by Department", file:"YP Task List by Department.xlsx", tag:"XLSX", color:"#0E9384"},
-    {label:"Program Design & Journeys", file:"YP Program Design & Journeys.docx", tag:"DOCX", color:"#5B4BE0"},
-    {label:"Program Design Visual", file:"YP Program Design Visual.html", tag:"HTML", color:"#8FB61E"},
+    {label:"Program Design & Journeys", soon:true},
+    {label:"Program Design Visual", soon:true},
     {label:"Stakeholder Dashboard", file:"YP Project Dashboard.html", tag:"HTML", color:"#8FB61E"},
     {label:"Kickoff Agenda", file:"YP Kickoff Meeting Agenda.docx", tag:"DOCX", color:"#5B4BE0"}
   ];
   const lg = $("links-grid");
   LINKS.forEach(l => {
-    const a = document.createElement("a");
-    a.className = "link-card";
-    a.href = l.file;
-    const icon = el("span","lk-icon", l.tag);
-    icon.style.background = l.color;
+    const a = document.createElement(l.soon ? "div" : "a");
+    a.className = "link-card" + (l.soon ? " link-soon" : "");
+    if(!l.soon) a.href = l.file;
+    const icon = el("span","lk-icon", l.soon ? "SOON" : l.tag);
+    icon.style.background = l.soon ? "#B4B4C2" : l.color;
     a.appendChild(icon);
     const txt = el("span","lk-text");
     txt.appendChild(el("span","lk-label", l.label));
-    const f = el("span","lk-file", l.file);
+    const f = el("span","lk-file", l.soon ? "Coming soon — not ready to share yet" : l.file);
     f.style.display = "block";
     txt.appendChild(f);
     a.appendChild(txt);
