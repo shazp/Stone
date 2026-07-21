@@ -263,8 +263,8 @@
    DATA — updated by Sharon + Claude from the master project plan.
    ===================================================================== */
 const DATA = {
-updated: "July 16, 2026",
-banner: "Planning is on schedule. The grant is executed and funded, the South LA site at Broadway & Manchester is secured, hiring for the core team is in motion, and partnership outreach has begun. Full project plan goes to leadership review in early August.",
+updated: "July 21, 2026",
+banner: "Planning is on schedule. The grant is executed and funded, the South LA site at Broadway & Manchester is secured, hiring for the core team is in motion, and the employer/referral pipeline is expanding (CRCD, Hensel Phelps, and a new conversation with Sanitize Uplift). Full project plan goes to leadership review in early August.",
 
 phases: [
  {tag:"Phase 1 · Current", name:"Project & Planning", when:"July – August", pct:45, current:true,
@@ -279,9 +279,11 @@ milestones: [
  {date:"Jun 26", text:"Grant agreement executed — $1.8M over 2 years (Young Adults Forward Fund)", state:"done"},
  {date:"Jul 1",  text:"First grant payment received ($900K)", state:"done"},
  {date:"Jul 16", text:"South LA site secured — Broadway & Manchester", state:"done"},
- {date:"Jul 20", text:"Partnership meeting: CRCD (referrals + employer network)", state:"next"},
+ {date:"Jul 20", text:"Partnership meeting: CRCD (referrals + employer network)", state:"done"},
+ {date:"Jul 23", text:"Partnership meeting: Sanitize Uplift (workforce & public-space stabilization)", state:"next"},
  {date:"Jul 28", text:"Program introduced at All-SJC Leadership Lunch", state:"next"},
  {date:"Aug 3",  text:"Site visit & space plan (Broadway & Manchester)", state:"next"},
+ {date:"Aug 24", text:"Hensel Phelps EOP apprenticeship bootcamp interviews (Laborers Union cohort)", state:"next"},
  {date:"Early Aug", text:"Full project plan → leadership review", state:"next"},
  {date:"Sep 1",  text:"Outreach & recruitment phase opens", state:"future"},
  {date:"Oct",    text:"Core team hired & onboarded", state:"future"},
@@ -346,7 +348,10 @@ tasks: [
  {t:"Hire Program Manager, Youth Workforce Development", cat:"staff", status:"inprogress", owner:"Sharon + P&C", note:"Selection process aligned with leadership."},
  {t:"Hire Employment Liaison (senior employer relationship-builder)", cat:"staff", status:"next", owner:"Sharon + P&C", note:""},
  {t:"Finalize job descriptions for all new roles", cat:"staff", status:"next", owner:"Sharon + P&C", note:""},
- {t:"CRCD introductory meeting — referral partnership + employer network", cat:"employer", status:"next", owner:"Sharon", due:"Jul 20", note:""},
+ {t:"CRCD introductory meeting — referral partnership + employer network", cat:"employer", status:"done", owner:"Sharon", due:"Jul 20", note:"Held with Jose Guadron (Sr. Dir., Workforce Development) — connection established, collaboration discussed."},
+ {t:"CRCD follow-up — firm up collaboration next steps", cat:"employer", status:"next", owner:"Sharon", note:"With Jose Guadron, following the Jul 20 meeting."},
+ {t:"Hensel Phelps EOP apprenticeship bootcamp — Laborers Union cohort", cat:"employer", status:"next", owner:"Sharon", due:"Aug 24", note:"One candidate identified; prep underway ahead of interviews at Constitution Park, El Segundo."},
+ {t:"Sanitize Uplift — explore employer/referral partnership", cat:"employer", status:"next", owner:"Sharon", due:"Jul 23", note:"Workforce development & public-space stabilization; hires directly from encampments — strong overlap with justice-involved & housing-insecure participants."},
  {t:"Compton College & LA Trade-Tech partnership conversations", cat:"employer", status:"waiting", owner:"Dr. Ryan", note:"Connecting with college presidents."},
  {t:"Youth Conference — capture takeaways (incl. New Ways to Work)", cat:"program", status:"next", owner:"Sharon", note:""},
  {t:"Confirm curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", owner:"Program team", note:""},
@@ -354,8 +359,8 @@ tasks: [
  {t:"Update intake & application process (standardized data)", cat:"program", status:"backlog", owner:"Program team", note:""},
  {t:"Participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", owner:"Program team", note:""},
  {t:"Communicate SNAP-benefit retention to prospective participants", cat:"program", status:"next", owner:"Sharon", note:"Eligible participants may keep benefits while in program."},
- {t:"Explore UCLA Extension community health worker pathway", cat:"program", status:"backlog", owner:"Joy", note:"Possible future health track."},
- {t:"Design Salesforce tracking for all grant outcomes", cat:"data", status:"inprogress", owner:"Sharon + Elise — Data", note:"Ready before launch."},
+ {t:"Evaluate UCLA Extension community health worker training as a participant pathway", cat:"program", status:"inprogress", owner:"Sharon — Project Lead", note:"Possible future health track; evaluation underway ahead of a pathway decision."},
+ {t:"Design Salesforce tracking for all grant outcomes", cat:"data", status:"inprogress", owner:"Sharon + Elise — Data", note:"Ready before launch. Outcomes & performance-tracking framework session held; follow-up being scheduled."},
  {t:"Salesforce build & staff training", cat:"data", status:"waiting", owner:"Elise — Data", note:""},
  {t:"Data platform decision (Salesforce for Youth Pathways)", cat:"data", status:"inprogress", owner:"Sharon + Data", note:""},
  {t:"Performance targets: 90 days / 6 months / Year 1", cat:"data", status:"next", owner:"Sharon + Data", note:""},
@@ -383,6 +388,8 @@ depts: [
 ],
 
 feed: [
+ {date:"Jul 21", text:"<b>Hensel Phelps bootcamp cohort corrected</b> to the Laborers Union (previously recorded as Carpenters) — one candidate identified, prep underway ahead of Aug 24 interviews.", tag:"Partnership"},
+ {date:"Jul 20", text:"<b>CRCD introductory meeting held</b> with Jose Guadron (Sr. Dir., Workforce Development) — connection established, collaboration under discussion.", tag:"Meeting"},
  {date:"Jul 16", text:"<b>South LA building secured</b> at Broadway & Manchester — site visit set for Aug 3 (Sharon + Ginneh).", tag:"Milestone"},
  {date:"Jul 16", text:"<b>CRCD introductory meeting scheduled</b> for Jul 20 — referral partnership and employer-network exploration.", tag:"Partnership"},
  {date:"Jul 16", text:"<b>Partner & resource directory stood up</b> — 58 South LA / LA County youth orgs, employers, and public programs mapped for referrals and outreach.", tag:"Tool"},
