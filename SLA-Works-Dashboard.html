@@ -151,6 +151,8 @@
   .links-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px;}
   a.link-card{display:flex; gap:12px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:13px; padding:14px 16px; text-decoration:none; color:var(--ink); transition:all .15s ease;}
   a.link-card:hover{border-color:var(--green); box-shadow:0 5px 16px rgba(30,90,60,.12);}
+  .link-card.link-soon{opacity:.6; cursor:default;}
+  .link-card.link-soon:hover{border-color:var(--line); box-shadow:none;}
   .lk-icon{display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:30px; border-radius:8px; color:#fff; font-family:'Space Mono',monospace; font-size:10px; font-weight:700;}
   .lk-label{font-family:'Sora',sans-serif; font-size:13.5px; font-weight:700; display:block;}
   .lk-file{font-size:11px; color:var(--sub);}
@@ -304,8 +306,8 @@ priorities: [
 
 outcomes: [
  {label:"Youth enrolled (entry)", actual:0, target:150, note:"70 in Yr 1 + 80 in Yr 2 (unduplicated)"},
- {label:"Into workforce tracks (Codetalk / Fortifi)", actual:0, target:80, note:"40 per year"},
- {label:"Graduates (Codetalk / Fortifi)", actual:0, target:64, note:"80% of enrolled"},
+ {label:"Into workforce tracks (Advance Tech Training Class / Foundations)", actual:0, target:80, note:"40 per year"},
+ {label:"Graduates (Advance Tech Training Class / Foundations)", actual:0, target:64, note:"80% of enrolled"},
  {label:"Living-wage / career placement", actual:0, target:50, note:"~80% of grads; 75% within 12 months"},
  {label:"Justice-involved avoid reoffending (12 mo)", actual:0, target:90, unit:"%", note:"90% target"},
  {label:"Progress toward economic mobility", actual:0, target:135, note:"90% of all youth served"}
@@ -313,7 +315,7 @@ outcomes: [
 
 tracker: [
  {stage:"Stage 1", name:"Program Design", stat:"In progress", desc:"Program model, participant journeys, and intake process in active design; curriculum framework set."},
- {stage:"Stage 2", name:"Courses & Classes", stat:"3 <small>in design</small>", desc:"Foundational Workforce Readiness, Codetalk (project management & technology skills), and Fortifi — launching with the program."},
+ {stage:"Stage 2", name:"Courses & Classes", stat:"3 <small>in design</small>", desc:"Foundational Workforce Readiness, Advance Tech Training Class (project management & technology skills), and Foundations (tech literacy, professional development, financial literacy) — launching with the program."},
  {stage:"Stage 3", name:"Recruitment", stat:"Opens Sep", desc:"Target: 80 young adults (ages 18–30) this quarter. Sourcing via SJC staff referrals, community partners, and outreach events."},
  {stage:"Stage 4", name:"Candidate Assessment", stat:"Tools in dev", desc:"Standardized intake, readiness criteria, and interview toolkit being built for consistent, fair selection."},
  {stage:"Stage 5", name:"Apprenticeships & Employers", stat:"11 <small>targets identified</small>", desc:"Employer & apprenticeship pipeline mapped (incl. LA:RISE, Hospitality Training Academy); 2 colleges in conversation."},
@@ -356,8 +358,8 @@ tasks: [
  {t:"Merge Opportunities — referrals & collaboration call", cat:"employer", status:"next", owner:"Sharon", due:"Jul 22, 2:30 PM", note:"Workforce-dev nonprofit for foster/TAY & reentry youth 18–28 across LA/OC/SD (Erin Earlywine, ED). 30-min call to explore two-way referrals + collaboration."},
  {t:"Compton College & LA Trade-Tech partnership conversations", cat:"employer", status:"waiting", owner:"Dr. Ryan", note:"Connecting with college presidents."},
  {t:"Youth Conference — capture takeaways (incl. New Ways to Work)", cat:"program", status:"next", owner:"Sharon", note:""},
- {t:"Confirm curriculum: Foundational Readiness, Codetalk, Fortifi", cat:"program", status:"backlog", owner:"Program team", note:""},
- {t:"Reposition Codetalk as project management & technology skills", cat:"program", status:"next", owner:"Sharon", note:"Messaging update across materials."},
+ {t:"Confirm curriculum: Foundational Readiness, Advance Tech Training Class, Foundations", cat:"program", status:"backlog", owner:"Program team", note:""},
+ {t:"Rename Code Talk to 'Advance Tech Training Class' across materials", cat:"program", status:"done", owner:"Sharon", note:"Positioned as project management & technology skills; renamed 7/21."},
  {t:"Update intake & application process (standardized data)", cat:"program", status:"backlog", owner:"Program team", note:""},
  {t:"Participant file structure (consent, income, care plans, resumes)", cat:"program", status:"backlog", owner:"Program team", note:""},
  {t:"Communicate SNAP-benefit retention to prospective participants", cat:"program", status:"next", owner:"Sharon", note:"Eligible participants may keep benefits while in program."},
@@ -401,7 +403,7 @@ feed: [
 ],
 
 links: [
- {label:"Program Design Visual", file:"YP Program Design Visual.html", tag:"LIVE", color:"#1E5A3C"},
+ {label:"Program Design Visual", soon:true},
  {label:"The Youth Book — Partner & Resource Directory (staff edition)", file:"YP Youth Book (Staff).html", tag:"LIVE", color:"#93A31C"}
 ],
 reqNote: "Available on request from the project lead: signed grant agreement & objectives · full budget · program design & participant journeys (working doc) · department task plan · interview & assessment toolkit (in development)."
@@ -516,9 +518,10 @@ DATA.feed.forEach(f=>{
 
 /* links */
 DATA.links.forEach(l=>{
-  const a=document.createElement("a"); a.className="link-card"; a.href=l.file;
-  a.innerHTML=`<span class="lk-icon" style="background:${l.color}">${l.tag}</span>
-  <span><span class="lk-label">${l.label}</span><span class="lk-file">${l.file}</span></span>`;
+  const a=document.createElement(l.soon ? "div" : "a"); a.className="link-card"+(l.soon?" link-soon":"");
+  if(!l.soon) a.href=l.file;
+  a.innerHTML=`<span class="lk-icon" style="background:${l.soon ? '#9AA69A' : l.color}">${l.soon ? 'SOON' : l.tag}</span>
+  <span><span class="lk-label">${l.label}</span><span class="lk-file">${l.soon ? 'Coming soon — not ready to share yet' : l.file}</span></span>`;
   $("links-grid").appendChild(a);
 });
 $("req-note").textContent = DATA.reqNote;
