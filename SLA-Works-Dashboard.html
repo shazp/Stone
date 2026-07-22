@@ -110,8 +110,12 @@
   /* ---------- board ---------- */
   .kanban{display:grid; grid-template-columns:repeat(5,minmax(212px,1fr)); gap:13px; overflow-x:auto; padding-bottom:8px;}
   .kcol{background:#F6F8F2; border:1px solid var(--line); border-radius:13px; padding:12px;}
-  .kcol h3{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--sub); margin-bottom:10px; display:flex; justify-content:space-between;}
-  .kcount{background:#fff; border:1px solid var(--line); border-radius:999px; padding:0 8px;}
+  .kcol-head{display:flex; align-items:center; gap:7px; margin-bottom:10px;}
+  .kcol-head .klabel{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--sub); flex:1;}
+  .kcount{background:#fff; border:1px solid var(--line); border-radius:999px; padding:0 8px; font-family:'Space Mono',monospace; font-size:11px; color:var(--sub);}
+  .kcol-toggle{font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--moss); background:#fff; border:1px solid var(--line); border-radius:999px; padding:3px 9px; cursor:pointer; white-space:nowrap; transition:border-color .15s ease;}
+  .kcol-toggle:hover{border-color:var(--moss);}
+  .kcol.collapsed .kcol-cards{display:none;}
   .task-card{background:#fff; border:1px solid var(--line); border-radius:11px; padding:11px 12px; margin-bottom:9px; font-size:12.5px;}
   .task-card .tt{font-weight:700; line-height:1.35; font-family:'Sora',sans-serif; font-size:12.5px;}
   .task-card .tm{color:var(--sub); font-size:11.5px; margin-top:5px;}
@@ -266,7 +270,7 @@
    ===================================================================== */
 const DATA = {
 updated: "July 21, 2026 (PM)",
-banner: "Planning is on schedule. The grant is executed and funded, the South LA site at Broadway & Manchester is secured, hiring for the core team is in motion, and the employer/referral pipeline is expanding (CRCD, Hensel Phelps, and a new conversation with Sanitize Uplift). Full project plan goes to leadership review in early August.",
+banner: "Planning is on schedule. The South LA site at Broadway & Manchester is secured, hiring for the core team is moving, starting with the Program Manager, and the tech team is training for work with youth in South LA. The employer/referral pipeline is expanding (CRCD, Hensel Phelps, Merge Opportunities, and a new conversation with Sanitize Uplift), and program design and materials are in development. Full project plan goes to leadership review in early August.",
 
 phases: [
  {tag:"Phase 1 · Current", name:"Project & Planning", when:"July – August", pct:45, current:true,
@@ -319,7 +323,8 @@ tracker: [
  {stage:"Stage 3", name:"Recruitment", stat:"Opens Sep", desc:"Target: 80 young adults (ages 18–30) this quarter. Sourcing via SJC staff referrals, community partners, and outreach events."},
  {stage:"Stage 4", name:"Candidate Assessment", stat:"Tools in dev", desc:"Standardized intake, readiness criteria, and interview toolkit being built for consistent, fair selection."},
  {stage:"Stage 5", name:"Apprenticeships & Employers", stat:"11 <small>targets identified</small>", desc:"Employer & apprenticeship pipeline mapped (incl. LA:RISE, Hospitality Training Academy); 2 colleges in conversation."},
- {stage:"Stage 6", name:"Employment Outcomes", stat:"Begins post-launch", desc:"Placement, retention & wage outcomes tracked in Salesforce from first cohort onward."}
+ {stage:"Stage 6", name:"Employment Outcomes", stat:"Begins post-launch", desc:"Placement, retention & wage outcomes tracked in Salesforce from first cohort onward."},
+ {stage:"Stage 7", name:"Program Management & Implementation", stat:"Coming soon", desc:"Placeholder — a dedicated view of the day-to-day running of the program once launched. Detail will be added to the project management dashboard."}
 ],
 
 categories: [
@@ -384,7 +389,7 @@ depts: [
  {name:"Operations", status:"motion", label:"In motion", tasks:3, desc:"Site secured; space build-out & safety planning next."},
  {name:"Data / Evaluation", status:"motion", label:"In motion", tasks:7, desc:"Salesforce architecture & outcome tracking underway."},
  {name:"Leadership / Governance", status:"motion", label:"In motion", tasks:6, desc:"Governance, decision rights & launch-date confirmation."},
- {name:"People & Culture", status:"starting", label:"Starting", tasks:6, desc:"Job descriptions & postings for the new roles."},
+ {name:"People & Culture", status:"motion", label:"In motion", tasks:6, desc:"Program Manager applicants under review by Sharon. Sharon meeting with P&C this week to kick off applicant screening next week while she's OOO."},
  {name:"Communications", status:"starting", label:"Starting", tasks:3, desc:"Outreach, employer engagement & stakeholder plans."},
  {name:"Finance / Contracts", status:"queued", label:"Queued", tasks:5, desc:"Budget codes, consultant agreements, space contracts."},
  {name:"Compliance", status:"queued", label:"Queued", tasks:3, desc:"Policies, consent forms & funder reporting schedule."},
@@ -474,7 +479,13 @@ const COLS=[["backlog","Backlog"],["next","Up Next"],["inprogress","In Progress"
 COLS.forEach(([key,label])=>{
   const col=document.createElement("div"); col.className="kcol";
   const items=DATA.tasks.filter(t=>t.status===key);
-  col.innerHTML=`<h3>${label}<span class="kcount">${items.length}</span></h3>`;
+
+  const head=document.createElement("div"); head.className="kcol-head";
+  head.innerHTML=`<span class="klabel">${label}</span><span class="kcount">${items.length}</span>
+  <button type="button" class="kcol-toggle" aria-expanded="true">Hide</button>`;
+  col.appendChild(head);
+
+  const cards=document.createElement("div"); cards.className="kcol-cards";
   items.forEach(t=>{
     const c=catById[t.cat]||{label:t.cat,color:"#888"};
     const d=document.createElement("div"); d.className="task-card";
@@ -482,8 +493,17 @@ COLS.forEach(([key,label])=>{
     ${t.note?`<div class="tm">${t.note}</div>`:""}
     <span class="towner">${t.owner}</span>
     <span class="tcat" style="background:${c.color}18;color:${c.color}">${c.label}</span>`;
-    col.appendChild(d);
+    cards.appendChild(d);
   });
+  col.appendChild(cards);
+
+  const toggleBtn = head.querySelector(".kcol-toggle");
+  toggleBtn.addEventListener("click", () => {
+    const collapsed = col.classList.toggle("collapsed");
+    toggleBtn.setAttribute("aria-expanded", String(!collapsed));
+    toggleBtn.textContent = collapsed ? `Show all (${items.length})` : "Hide";
+  });
+
   $("kanban").appendChild(col);
 });
 
