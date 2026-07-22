@@ -9,10 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --violet:#5B4BE0; --violet-d:#3A2CB0; --violet-t:#EEEBFC;
-    --lime:#C6F24E; --lime-d:#8FB61E;
-    --coral:#FF6B57; --teal:#0E9384; --amber:#F5A524;
-    --ink:#181826; --sub:#5A5A6E; --line:#E6E4F3; --bg:#FFFFFF;
+    --violet:#6C4DF6; --violet-d:#4326C9; --violet-t:#EFEBFF;
+    --lime:#A9E829; --lime-d:#5C9E0B;
+    --coral:#FF5C45; --teal:#0DA56E; --amber:#FFAD1F;
+    --ink:#171529; --sub:#5C5A78; --line:#E4E2F4; --bg:#FFFFFF;
+    --mint:#E4F9E8;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -418,19 +419,20 @@
    }]
    ===================================================================== */
 const DATA = {
- updated: "July 21, 2026",
+ updated: "July 22, 2026",
  phase: "Grant Active · Pre-Launch Build",
  categories: [
-  {id:"planning", label:"Project Planning & Launch", color:"#5B4BE0"},
-  {id:"staff", label:"Staff Recruitment & Hiring", color:"#0E9384"},
-  {id:"training", label:"Team Training & Onboarding", color:"#8FB61E"},
-  {id:"program", label:"Program Design & Curriculum", color:"#FF6B57"},
-  {id:"recruit", label:"Participant Recruitment & Enrollment", color:"#F5A524"},
-  {id:"employer", label:"Employer Partnerships & Jobs", color:"#3A2CB0"},
-  {id:"ops", label:"Operations & Office Space", color:"#0EA5A5"},
-  {id:"data", label:"Data, Outcomes & Evaluation", color:"#7C4DFF"},
-  {id:"budget", label:"Budget, Compliance & Reporting", color:"#B5623C"},
-  {id:"other", label:"Cross-Project & Other Priorities", color:"#6B6B7B"}
+  {id:"planning", label:"Project Planning & Launch", color:"#6C4DF6"},
+  {id:"staff", label:"Staff Recruitment & Hiring", color:"#4326C9"},
+  {id:"training", label:"Team Training & Onboarding", color:"#0DA56E"},
+  {id:"program", label:"Program Design & Curriculum", color:"#FF5C45"},
+  {id:"recruit", label:"Participant Recruitment & Enrollment", color:"#E8930C"},
+  {id:"employer", label:"Employer Partnerships & Jobs", color:"#0E9BB5"},
+  {id:"ops", label:"Operations & Office Space", color:"#C05A21"},
+  {id:"data", label:"Data, Outcomes & Evaluation", color:"#C233C9"},
+  {id:"budget", label:"Budget, Compliance & Reporting", color:"#6B7280"},
+  {id:"other", label:"Cross-Project & Other Priorities", color:"#5C9E0B"},
+  {id:"food", label:"B&R Food Programs", color:"#3FA34D"}
  ],
  statuses: [
   {id:"backlog", label:"Backlog"},
@@ -452,21 +454,21 @@ const DATA = {
   {id:1, title:"Own & build the Youth Pathways South LA project plan", cat:"planning", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:"Laurie supporting."},
   {id:2, title:"Stone grant executed — proposal reviewed & signed", cat:"planning", status:"done", priority:"medium", owner:"Dr. Ryan", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"Grant Agreement signed by Dr. Ryan & Sarah Yun 6/26/2026. $1.8M, term 7/1/26–6/30/28."},
   {id:3, title:"Be fluent in the per-student / per-cohort cost story for the board", cat:"budget", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Executive Leadership", due:null, note:"Grant awarded $1.8M for 150 youth (~$12,000/youth). Proposed budget was $1,818,858 → ~$18,858 gap to absorb. Board flagged cost — be ready to explain the economics."},
-  {id:4, title:"Plan recruitment for a January 2027 cohort start", cat:"recruit", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"If Stone approves soon, recruitment could begin this fall."},
+  {id:4, title:"Plan recruitment for a January 2027 cohort start", cat:"recruit", status:"backlog", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"If Stone approves soon, recruitment could begin this fall. CONFIRMED 7/22: program launches Nov 2026 overall, but the tech tracks (Advance Tech Training Class / Foundations) won't start right away — they begin Dec 2026 or Jan 2027. This recruitment plan targets that tech-track cohort."},
   {id:5, title:"Site visit to South LA building (Broadway & Manchester) with Ginneh", cat:"ops", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-08-03", note:"Building SECURED at Broadway & Manchester ✓. Site visit scheduled Mon Aug 3 with Ginneh — walk space, assess readiness/computer lab, confirm move-in timeline."},
   {id:6, title:"Acquire full South LA building — approach building owner", cat:"ops", status:"done", priority:"urgent", owner:"Dr. Ryan", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"SECURED ✓ — building at Broadway & Manchester. Site visit 8/3 with Ginneh; next step is prep (see task 25)."},
-  {id:9, title:"Determine case manager backfill if Morgan is promoted to PM", cat:"staff", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
+  {id:9, title:"Determine case manager backfill for Morgan's move to the new program", cat:"staff", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"UPDATE 7/22: Morgan is not going for the PM role — she's confirmed as Case Manager on the youth side of the new program instead (see task #17). She's still moving off her current role, so the backfill question likely still applies; confirm scope."},
   {id:10, title:"Clarify Natalie's bandwidth across Santa Monica & South LA", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Does the Stone-funded PM straddle both sites?"},
   {id:11, title:"Hire an Employment Liaison (senior external relationship-builder)", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"No internal candidate identified yet."},
-  {id:12, title:"Design Salesforce tracking for all Stone outcomes (with Elise)", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Elise", requestedBy:"", due:null, note:"Enrollment, placement, retention, SUD referrals — before launch. Met with Elise to craft outcomes & performance-tracking framework; follow-up session in scheduling."},
+  {id:12, title:"Design Salesforce tracking for all Stone outcomes (with Elise)", cat:"data", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Elise", requestedBy:"", due:"2026-07-23", note:"Enrollment, placement, retention, SUD referrals — before launch. Met with Elise to craft outcomes & performance-tracking framework; follow-up session confirmed for tomorrow, 7/23."},
   {id:13, title:"Rethink participant recruitment sourcing & readiness criteria", cat:"recruit", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Applications dropped ~80 → ~22 for 12 seats; full rethink needed."},
   {id:14, title:"Rename Code Talk to 'Advance Tech Training Class' across materials", cat:"program", status:"done", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Not 'pathway to tech' — positioned as project management & technology skills. Renamed 7/21 across dashboards, Youth Book, and program design docs."},
   {id:15, title:"Coordinate partnership talks with Compton College & LA Trade Tech", cat:"employer", status:"backlog", priority:"high", owner:"Dr. Ryan", waitingOn:"Dr. Ryan", requestedBy:"Dr. Ryan", due:null, note:"Dr. Ryan connecting with college presidents."},
   {id:16, title:"Elise: build Salesforce structure & train program staff pre-launch", cat:"data", status:"waiting", priority:"high", owner:"Elise", waitingOn:"Elise", requestedBy:"", due:null, note:""},
-  {id:17, title:"Morgan: interviewing for Program Manager role", cat:"staff", status:"waiting", priority:"high", owner:"Morgan", waitingOn:"Morgan", requestedBy:"", due:null, note:"Ongoing."},
+  {id:17, title:"Morgan confirmed as Case Manager for the new program (youth side)", cat:"staff", status:"done", priority:"high", owner:"Morgan", waitingOn:"", requestedBy:"", due:null, note:"CONFIRMED 7/22: Morgan is no longer being considered for the Program Manager role — she'll be Case Manager on the youth side of the new program. See task #9 for the backfill question this raises."},
   {id:18, title:"Strategic-plan workforce goals review with Laurie", cat:"planning", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Laurie", due:null, note:""},
   {id:19, title:"Frame South LA expansion carefully with Santa Monica leadership", cat:"planning", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"Positioned as a success built on the SM model."},
-  {id:20, title:"Evaluate UCLA Extension community health worker training as a participant pathway", cat:"program", status:"inprogress", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-22", note:"Reassigned from Joy to Sharon. Attending the UCLA CHW Student Info Session Wed 7/22, then applying to take the course herself to evaluate the material firsthand before considering it as a pathway."},
+  {id:20, title:"Evaluate UCLA Extension community health worker training as a participant pathway", cat:"program", status:"inprogress", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-22", note:"Reassigned from Joy to Sharon. Attending the UCLA CHW Student Info Session Wed 7/22, then applying to take the course herself to evaluate the material firsthand before considering it as a pathway. TONIGHT: need to get Kimberly's credit card to register for the class."},
   {id:21, title:"Confirm governance, decision-maker & progress/risk tracking", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Kickoff decision."},
   {id:22, title:"Finalize job descriptions for the new roles", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:""},
   {id:23, title:"Update intake/application process for standardized data", cat:"program", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Include justice-involved fields."},
@@ -494,8 +496,8 @@ const DATA = {
   {id:44, title:"Build Q3 recruitment strategy: recruit ≥80 young adults to retain 40 by Jan 2027", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS goal: 80 recruited this quarter → 40 retained entering January 2027."},
   {id:45, title:"Mobilize case managers & SJC staff to identify/refer eligible 18–30-year-olds", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS question: how to better leverage case managers and other SJC staff for referrals."},
   {id:46, title:"Evaluate an internal referral incentive (gift cards / recognition)", cat:"recruit", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS question: modest incentive to encourage staff referrals — decide if/how."},
-  {id:47, title:"Introduce program at July 28 All-SJC Leadership Lunch (Natalie to present — Sharon OOO)", cat:"recruit", status:"next", priority:"high", owner:"Sharon", waitingOn:"Natalie", requestedBy:"Dr. Ryan", due:"2026-07-28", note:"RJS: use the All-SJC Leadership Lunch to start generating org-wide referrals; brief Natalie to deliver since you're OOO."},
-  {id:48, title:"Communicate SNAP-retention eligibility to prospective participants", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS: more intentionally message that eligible participants may keep SNAP benefits while in the program, if applicable."},
+  {id:47, title:"Introduce program at July 28 All-SJC Leadership Lunch (Natalie to present — Sharon OOO)", cat:"recruit", status:"inprogress", priority:"high", owner:"Sharon", waitingOn:"Natalie", requestedBy:"Dr. Ryan", due:"2026-07-28", note:"RJS: use the All-SJC Leadership Lunch to start generating org-wide referrals; brief Natalie to deliver since you're OOO. Briefing Natalie today, 7/22."},
+  {id:48, title:"Communicate SNAP-retention eligibility to prospective participants", cat:"program", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:null, note:"RJS: more intentionally message that eligible participants may keep SNAP benefits while in the program, if applicable. This is the participant-facing messaging piece — the underlying eligibility mechanics & case-management workflow are tasks #72 and #73."},
   {id:49, title:"Intro meeting with CRCD (referral partnership + employer network)", cat:"employer", status:"done", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-20", note:"Held Mon 7/20 with Jose Guadron (with Elise) — established connection, shared connections, discussed collaboration. Follow-up with Jose is task #55."},
   {id:50, title:"Weekly: review & update SLA Works leadership dashboard (Mondays)", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"RECURRING. Each Monday with Claude: review new North Star tasks (include/exclude for leadership view one-by-one), add meetings/wins/decisions to the Activity log, refresh milestones & priorities, push live. Auto-publish runs Mon 7am — review before or after. Curation record: .deploy/sla_works_manifest.json."},
   {id:51, title:"Prep & send candidates to Hensel Phelps EOP apprenticeship interviews", cat:"employer", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-08-24", note:"Mon 8/24, Constitution Park, El Segundo (near LAX) — 10–15 min interviews for the Laborers Union bootcamp cohort (corrected from Carpenters). One candidate identified; prep in progress. Confirm logistics with Michelle Keyser. See Apprenticeships section below."},
@@ -508,7 +510,23 @@ const DATA = {
  {id:58, title:"Build cascading project-plan workbook: Master plan + Operations & Recruitment tab + Program Development & Implementation tab", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:"2026-07-24", note:"Same workbook, separate tabs per team, so each manages operational detail while rolling up to the master's executive-level view. Dr. Ryan sees this as a potential model for other SJC project managers."},
  {id:59, title:"Extend project plan through first 6 months of implementation", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:"2026-07-24", note:"Currently pre-launch-focused. Extend to cover participant recruitment & enrollment, cohort launches, staff onboarding & coaching, employer-partnership development, retention, dashboard/outcome reviews, grant reporting, budget monitoring, quality-improvement cycles, and lessons-learned after each cohort."},
  {id:60, title:"Screen Program Manager applicant pool (60+ resumes)", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"Dr. Ryan", due:"2026-07-28", note:"Meeting with P&C this week to kick off; active screening begins next week while Sharon is OOO. Dr. Ryan asked for a status update 7/21 — reply drafted, see task #61."},
- {id:61, title:"Reply to Dr. Ryan — project plan feedback + PM hiring update", cat:"planning", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Draft prepared 7/21 in response to his project-plan email; review and send."}
+ {id:61, title:"Reply to Dr. Ryan — project plan feedback + PM hiring update", cat:"planning", status:"done", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Draft prepared 7/21 in response to his project-plan email; sent 7/22."},
+ {id:62, title:"Brief team (Morgan, Justelle, Tonia) on program, training & prep before Sharon's OOO", cat:"staff", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:"2026-07-24", note:"Set them up to run point while Sharon is OOO next week — program status, training/prep in flight, and who owns what while she's out."},
+
+ /* --- SNAP / CalFresh eligibility (cross-cutting: food programs + SLA case management) --- */
+ {id:71, title:"Create SNAP-loss distribution collateral for food programs", cat:"food", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"One-page handout (EN/SP) for pantry & cafe distribution explaining current CalFresh work requirements, exemptions, and how approved training hours preserve eligibility. All policy language reviewed by a benefits specialist before print — pairs with #72's verified language."},
+ {id:72, title:"Confirm Youth Pathways counts as a qualifying CalFresh work activity", cat:"program", status:"next", priority:"high", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Verify with DPSS (or benefits counsel) whether YP participation satisfies the CalFresh/SNAP work requirement, under what designation (WIOA, CalFresh E&T, other), confirm the hour threshold (Sharon's figure: 80 hrs/month) and the accepted verification format, and produce the participation-verification letter template. Blocks #73."},
+ {id:73, title:"Stand up CalFresh hours-tracking & verification workflow for case management", cat:"data", status:"backlog", priority:"high", owner:"Sharon + Elise — Data", waitingOn:"", requestedBy:"", due:null, note:"Depends on #72. Add Salesforce fields (CalFresh recipient Y/N, work requirement applies + exemption reason, program hours this month, verification-letter-sent date); fold a monthly hours check + letter step into the case-management protocol; train case managers on screening and the escalation path when a participant trends under the threshold. This is also a strong funder metric for Stone: participants whose benefits YP is actively preserving."},
+
+ /* --- B&R Food Section: B&R Cafe, Food Pantry, B&R Training Kitchen --- */
+ {id:74, title:"B&R Cafe: lock summer staffing schedule & backup coverage", cat:"food", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Confirm shift coverage through Labor Day, identify the two thinnest slots, and name a trained backup for each."},
+ {id:75, title:"B&R Cafe: health permit & food handler certification audit", cat:"food", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Verify the cafe's LA County health permit renewal date and confirm every current staff member has a valid food handler card on file."},
+ {id:76, title:"B&R Cafe: daily sales reconciliation routine", cat:"food", status:"backlog", priority:"low", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Set a simple end-of-day POS-to-deposit reconciliation checklist and decide who reviews the weekly rollup."},
+ {id:77, title:"Food Pantry: LA Regional Food Bank ordering cadence & inventory pars", cat:"food", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Set par levels for staple categories and a standing weekly order day so the pantry stops swinging between shortage and spoilage."},
+ {id:78, title:"Food Pantry: volunteer shift calendar & no-show protocol", cat:"food", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Publish a recurring monthly shift signup, set minimum volunteers per distribution day, and define who gets called when a shift goes uncovered."},
+ {id:79, title:"Food Pantry: monthly distribution reporting (households served, pounds distributed)", cat:"food", status:"backlog", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Standardize the intake tally sheet and get one monthly number set flowing to development for funder reporting."},
+ {id:80, title:"B&R Training Kitchen: next cohort schedule & ServSafe certification tracking", cat:"food", status:"next", priority:"medium", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Confirm start date, roster cap, and instructor for the next cohort, and set up a tracker for who has completed ServSafe."},
+ {id:81, title:"B&R Training Kitchen: equipment maintenance & repair log", cat:"food", status:"backlog", priority:"low", owner:"Sharon", waitingOn:"", requestedBy:"", due:null, note:"Walk the kitchen with staff, list anything broken or near failure (hood, refrigeration, mixer), and set a quarterly preventive maintenance schedule with cost estimates."}
  ]
 };
 
