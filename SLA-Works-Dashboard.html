@@ -116,6 +116,19 @@
   .kcol-toggle{font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--moss); background:#fff; border:1px solid var(--line); border-radius:999px; padding:3px 9px; cursor:pointer; white-space:nowrap; transition:border-color .15s ease;}
   .kcol-toggle:hover{border-color:var(--moss);}
   .kcol.collapsed .kcol-cards{display:none;}
+  .filter-bar{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px;}
+  .filter-btn{
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.04em;
+    border:1.5px solid var(--line); background:#fff; color:var(--sub);
+    border-radius:999px; padding:6px 13px; cursor:pointer; transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--moss); color:var(--moss); background:var(--green-t);}
+  .filter-btn.active{background:var(--green); border-color:var(--green); color:#fff;}
+  .filter-btn:focus-visible{outline:2px solid var(--citron-d); outline-offset:2px;}
+  .kempty{
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--sub); opacity:.65;
+    text-align:center; padding:10px 4px; border:1.5px dashed var(--line); border-radius:10px;
+  }
   .task-card{background:#fff; border:1px solid var(--line); border-radius:11px; padding:11px 12px; margin-bottom:9px; font-size:12.5px;}
   .task-card .tt{font-weight:700; line-height:1.35; font-family:'Sora',sans-serif; font-size:12.5px;}
   .task-card .tm{color:var(--sub); font-size:11.5px; margin-top:5px;}
@@ -222,6 +235,7 @@
   <!-- 05 THE BOARD -->
   <div class="sec-head"><span class="chipnum">05</span><h2>The Board</h2></div>
   <p class="sec-sub">Active project workstream — curated to the items relevant for leadership visibility.</p>
+  <div class="filter-bar" id="filter-bar"></div>
   <div class="kanban" id="kanban"></div>
 
   <!-- 06 WHERE THE WEIGHT IS -->
@@ -328,14 +342,16 @@ tracker: [
 ],
 
 categories: [
- {id:"planning", label:"Planning", color:"#1E5A3C"},
- {id:"recruit",  label:"Recruitment", color:"#93A31C"},
- {id:"ops",      label:"Operations", color:"#0E9384"},
- {id:"staff",    label:"Staffing", color:"#4E7A3A"},
- {id:"data",     label:"Data & Evaluation", color:"#2C6E8F"},
- {id:"program",  label:"Program Design", color:"#7A5AB8"},
- {id:"employer", label:"Employers & Partners", color:"#B8722D"},
- {id:"budget",   label:"Budget & Grant", color:"#A34E68"}
+ {id:"planning", label:"Project Planning & Launch", color:"#1E5A3C"},
+ {id:"staff",    label:"Staff Recruitment & Hiring", color:"#4E7A3A"},
+ {id:"training", label:"Team Training & Onboarding", color:"#A85846"},
+ {id:"program",  label:"Program Design & Curriculum", color:"#7A5AB8"},
+ {id:"recruit",  label:"Participant Recruitment & Enrollment", color:"#93A31C"},
+ {id:"employer", label:"Employer Partnerships & Jobs", color:"#B8722D"},
+ {id:"ops",      label:"Operations & Office Space", color:"#0E9384"},
+ {id:"data",     label:"Data, Outcomes & Evaluation", color:"#2C6E8F"},
+ {id:"budget",   label:"Budget, Compliance & Reporting", color:"#A34E68"},
+ {id:"other",    label:"Cross-Project & Other Priorities", color:"#6B7265"}
 ],
 
 /* Curated from the master project plan — leadership-relevant items only. */
@@ -476,36 +492,71 @@ DATA.tracker.forEach(t=>{
 /* board */
 const catById={}; DATA.categories.forEach(c=>catById[c.id]=c);
 const COLS=[["backlog","Backlog"],["next","Up Next"],["inprogress","In Progress"],["waiting","Waiting On"],["done","Done"]];
-COLS.forEach(([key,label])=>{
-  const col=document.createElement("div"); col.className="kcol";
-  const items=DATA.tasks.filter(t=>t.status===key);
+let activeFilter="all";
+const collapsedCols=new Set();
 
-  const head=document.createElement("div"); head.className="kcol-head";
-  head.innerHTML=`<span class="klabel">${label}</span><span class="kcount">${items.length}</span>
-  <button type="button" class="kcol-toggle" aria-expanded="true">Hide</button>`;
-  col.appendChild(head);
+function buildFilterBar(){
+  const bar=$("filter-bar");
+  bar.innerHTML="";
+  const mk=(id,label)=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="filter-btn"+(activeFilter===id?" active":"");
+    b.textContent=label;
+    b.addEventListener("click",()=>{ activeFilter=id; buildFilterBar(); renderKanban(); });
+    bar.appendChild(b);
+  };
+  mk("all","All");
+  DATA.categories.forEach(c=>mk(c.id,c.label));
+}
 
-  const cards=document.createElement("div"); cards.className="kcol-cards";
-  items.forEach(t=>{
-    const c=catById[t.cat]||{label:t.cat,color:"#888"};
-    const d=document.createElement("div"); d.className="task-card";
-    d.innerHTML=`<div class="tt">${t.t}${t.due?`<span class="tdue">${t.due}</span>`:""}</div>
-    ${t.note?`<div class="tm">${t.note}</div>`:""}
-    <span class="towner">${t.owner}</span>
-    <span class="tcat" style="background:${c.color}18;color:${c.color}">${c.label}</span>`;
-    cards.appendChild(d);
+function renderKanban(){
+  const board=$("kanban");
+  board.innerHTML="";
+  COLS.forEach(([key,label])=>{
+    const col=document.createElement("div"); col.className="kcol";
+    const items=DATA.tasks.filter(t=>t.status===key && (activeFilter==="all"||t.cat===activeFilter));
+
+    const head=document.createElement("div"); head.className="kcol-head";
+    head.innerHTML=`<span class="klabel">${label}</span><span class="kcount">${items.length}</span>
+    <button type="button" class="kcol-toggle" aria-expanded="true">Hide</button>`;
+    col.appendChild(head);
+
+    const cards=document.createElement("div"); cards.className="kcol-cards";
+    items.forEach(t=>{
+      const c=catById[t.cat]||{label:t.cat,color:"#888"};
+      const d=document.createElement("div"); d.className="task-card";
+      d.innerHTML=`<div class="tt">${t.t}${t.due?`<span class="tdue">${t.due}</span>`:""}</div>
+      ${t.note?`<div class="tm">${t.note}</div>`:""}
+      <span class="towner">${t.owner}</span>
+      <span class="tcat" style="background:${c.color}18;color:${c.color}">${c.label}</span>`;
+      cards.appendChild(d);
+    });
+    if(!items.length){
+      const e=document.createElement("div"); e.className="kempty";
+      e.textContent="No items"; cards.appendChild(e);
+    }
+    col.appendChild(cards);
+
+    const toggleBtn=head.querySelector(".kcol-toggle");
+    const setToggle=collapsed=>{
+      toggleBtn.setAttribute("aria-expanded",String(!collapsed));
+      toggleBtn.textContent=collapsed?`Show all (${items.length})`:"Hide";
+    };
+    if(collapsedCols.has(key)) col.classList.add("collapsed");
+    setToggle(collapsedCols.has(key));
+    toggleBtn.addEventListener("click",()=>{
+      const collapsed=col.classList.toggle("collapsed");
+      if(collapsed) collapsedCols.add(key); else collapsedCols.delete(key);
+      setToggle(collapsed);
+    });
+
+    board.appendChild(col);
   });
-  col.appendChild(cards);
+}
 
-  const toggleBtn = head.querySelector(".kcol-toggle");
-  toggleBtn.addEventListener("click", () => {
-    const collapsed = col.classList.toggle("collapsed");
-    toggleBtn.setAttribute("aria-expanded", String(!collapsed));
-    toggleBtn.textContent = collapsed ? `Show all (${items.length})` : "Hide";
-  });
-
-  $("kanban").appendChild(col);
-});
+buildFilterBar();
+renderKanban();
 
 /* weight */
 (function(){
